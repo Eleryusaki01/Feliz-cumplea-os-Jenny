@@ -9,7 +9,6 @@
 </head>
 <body>
 
-  <!-- Capas decorativas de fondo -->
   <div class="bg-gradient"></div>
   <div class="bg-bokeh" id="bokehLayer"></div>
   <canvas id="petalCanvas"></canvas>
@@ -22,7 +21,7 @@
       <div class="loader-dots">
         <span></span><span></span><span></span>
       </div>
-      <p class="loader-text">Preparando algo especial…</p>
+      <p class="loader-text">Preparando algo especial para ti…</p>
     </div>
   </div>
 
@@ -35,7 +34,6 @@
     <span class="music-icon">♪</span>
   </button>
 
-  <!-- PÁGINA PRINCIPAL -->
   <main id="app">
 
     <!-- ══ HERO ══ -->
@@ -53,7 +51,7 @@
 
         <h1 class="hero-title">
           <span class="title-for">Feliz Cumpleaños</span>
-          <span class="title-name">Jenny</span>
+          <span class="title-name" id="heroName">Jenny</span>
         </h1>
 
         <div class="hero-age-wrap">
@@ -83,25 +81,13 @@
       <div class="section-deco">🌺 · 🦋 · 🌸 · 🦋 · 🌺</div>
       <h2 class="section-title">Tu próximo cumpleaños</h2>
       <div class="countdown-grid" id="cdGrid">
-        <div class="cd-box">
-          <div class="cd-num" id="cdD">--</div>
-          <div class="cd-lbl">Días</div>
-        </div>
+        <div class="cd-box"><div class="cd-num" id="cdD">--</div><div class="cd-lbl">Días</div></div>
         <div class="cd-sep">:</div>
-        <div class="cd-box">
-          <div class="cd-num" id="cdH">--</div>
-          <div class="cd-lbl">Horas</div>
-        </div>
+        <div class="cd-box"><div class="cd-num" id="cdH">--</div><div class="cd-lbl">Horas</div></div>
         <div class="cd-sep">:</div>
-        <div class="cd-box">
-          <div class="cd-num" id="cdM">--</div>
-          <div class="cd-lbl">Minutos</div>
-        </div>
+        <div class="cd-box"><div class="cd-num" id="cdM">--</div><div class="cd-lbl">Minutos</div></div>
         <div class="cd-sep">:</div>
-        <div class="cd-box">
-          <div class="cd-num" id="cdS">--</div>
-          <div class="cd-lbl">Segundos</div>
-        </div>
+        <div class="cd-box"><div class="cd-num" id="cdS">--</div><div class="cd-lbl">Segundos</div></div>
       </div>
       <div class="bday-msg" id="bdayMsg">
         🎉 ¡Hoy es tu día, Jenny! 🎉
@@ -109,7 +95,6 @@
       </div>
     </section>
 
-    <!-- ══ DIVISOR ══ -->
     <div class="petal-divider reveal">
       <span>🌸</span><span>🌼</span><span>🌺</span><span>🌸</span><span>🌼</span>
     </div>
@@ -128,9 +113,37 @@
       </div>
     </section>
 
-    <!-- ══ DIVISOR ══ -->
     <div class="petal-divider reveal">
       <span>🦋</span><span>🌻</span><span>🦋</span><span>🌻</span><span>🦋</span>
+    </div>
+
+    <!-- ══ HISTORIA ══ -->
+    <section class="story-section reveal">
+      <div class="section-deco">🌹 · 💌 · 🌹</div>
+      <h2 class="section-title">Una historia para ti</h2>
+      <div class="story-card">
+        <div class="story-title">
+          <span class="story-rose">🌹</span>
+          El chico que quiso regalar su corazón
+          <span class="story-rose">🌹</span>
+        </div>
+        <div class="story-body">
+          <p>Había una vez un chico que no sabía bien cómo hablar, pero sí sabía sentir.</p>
+          <p>Un día de agosto, mientras el sol calentaba fuerte y los girasoles miraban al cielo, conoció a una chica llamada <em>Hadasha</em>. No fue algo dramático — fue algo peor: fue algo real. Ella simplemente estaba ahí, con su cabello negro cayendo sobre los hombros, vestida de negro como quien no necesita más colores para brillar, y con una mirada que parecía guardar un universo entero adentro.</p>
+          <p>Él quiso decirle algo. Algo bonito, algo que estuviera a la altura de lo que sentía. Pero las palabras se le atascaban en la garganta cada vez que ella aparecía. Entonces decidió hacer lo único que sabía hacer bien: <em>construir.</em></p>
+          <p>Pasó noches enteras armando algo con código y letras. No era un regalo físico — no podía darle flores sin que se marchitaran, ni chocolates sin que se acabaran. Quería darle algo que durara. Algo que el 7 de agosto de cada año le dijera, sin que él tuviera que estar presente: <strong>"sigues siendo la persona más especial que conozco."</strong></p>
+          <p>Lo llamó <em>su corazón digital</em> — porque cada línea que escribía venía de ahí. Cada girasol animado era una cosa que admiraba de ella. Cada mariposa que cruzaba la pantalla era un pensamiento que no se atrevía a decirle en voz alta. Cada pétalo que caía era un "te noto, te veo, me importas."</p>
+          <p>Y aunque Hadasha quizás nunca supiera todo lo que ese chico sentía, él estaba seguro de una cosa:</p>
+          <p class="story-closing"><em>"Algunas personas llegan a tu vida y la reorganizan por completo, sin pedirte permiso. Hadasha fue esa persona para mí. Y este regalo, aunque pequeño, es todo mi corazón hecho página."</em></p>
+        </div>
+        <div class="story-footer">
+          <span>— Borys 🌻</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="petal-divider reveal">
+      <span>🌹</span><span>🌸</span><span>🌹</span><span>🌸</span><span>🌹</span>
     </div>
 
     <!-- ══ GALERÍA ══ -->
@@ -138,41 +151,27 @@
       <div class="section-deco">🌺 · 🌸 · 🌺</div>
       <h2 class="section-title">Momentos <em>preciosos</em></h2>
       <div class="gallery-grid">
-
         <div class="gallery-card gc-large">
           <img src="Jenny_4.jpg" alt="Jenny"/>
-          <div class="gc-overlay">
-            <p class="gc-caption">Tu sonrisa ilumina todo 🌊</p>
-          </div>
+          <div class="gc-overlay"><p class="gc-caption">Tu sonrisa ilumina todo 🌊</p></div>
         </div>
-
         <div class="gallery-card">
           <img src="Jenny_5.jpg" alt="Jenny"/>
-          <div class="gc-overlay">
-            <p class="gc-caption">La artista detrás del lente 📷</p>
-          </div>
+          <div class="gc-overlay"><p class="gc-caption">La artista detrás del lente 📷</p></div>
         </div>
-
         <div class="gallery-card">
           <img src="Jenny_6.jpg" alt="Jenny"/>
-          <div class="gc-overlay">
-            <p class="gc-caption">Tu voz llega al alma 🎤</p>
-          </div>
+          <div class="gc-overlay"><p class="gc-caption">Tu voz llega al alma 🎤</p></div>
         </div>
-
         <div class="gallery-card gc-wide">
           <img src="Jenny_2.png" alt="Jenny"/>
-          <div class="gc-overlay">
-            <p class="gc-caption">Siempre tú, siempre hermosa 🌻</p>
-          </div>
+          <div class="gc-overlay"><p class="gc-caption">Siempre tú, siempre hermosa 🌻</p></div>
         </div>
-
       </div>
     </section>
 
-    <!-- ══ DIVISOR ══ -->
     <div class="petal-divider reveal">
-      <span>🌹</span><span>🌸</span><span>🌹</span><span>🌸</span><span>🌹</span>
+      <span>🌻</span><span>🦋</span><span>🌻</span><span>🦋</span><span>🌻</span>
     </div>
 
     <!-- ══ RAZONES ══ -->
@@ -182,7 +181,6 @@
       <div class="reasons-grid" id="reasonsGrid"></div>
     </section>
 
-    <!-- ══ DIVISOR ══ -->
     <div class="petal-divider reveal">
       <span>🌺</span><span>🦋</span><span>🌺</span><span>🦋</span><span>🌺</span>
     </div>
