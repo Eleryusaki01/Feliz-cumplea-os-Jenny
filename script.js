@@ -1,536 +1,499 @@
+/* ═══════════════════════════════════════════════════════════
+   script.js — Para Jenny 🌸
+   Sistema autónomo: pétalos SVG, mariposas, contenido por año
+═══════════════════════════════════════════════════════════ */
 
-// Initialize variables
-let currentStep = 1;
-const totalSteps = 6;
-let userName = "My Love";
+/* ── CONFIGURACIÓN ── */
+const BDAY_MONTH = 5;
+const BDAY_DAY   = 21;
+const BIRTH_YEAR = 2002;
 
+/* ── CONTENIDO POR AÑO ── */
+const CONTENT = {
+  2025: {
+    letter: `Jenny,<br><br>
+      Hoy que cumples <em>23 años</em>, pienso en todo lo que haces sin darte cuenta:
+      iluminas cada cuarto con tu presencia, cantas con el alma y fotografías el mundo
+      con unos ojos que ven belleza donde otros no ven nada.<br><br>
+      Eres como un girasol — siempre buscas la luz, y se la das a todos los que están
+      cerca de ti. Que este año sea tan especial como tú.
+      <strong>Feliz cumpleaños, Jenny.</strong>`,
+    reasons: [
+      { icon:'🌻', text:'Eres como los girasoles que amas: siempre orientada hacia la luz, sin importar qué tan oscuro esté el cielo.' },
+      { icon:'🐱', text:'Tienes la ternura de los gatos — tranquila por fuera, con un mundo enorme y hermoso por dentro.' },
+      { icon:'📷', text:'Tu mirada detrás de la cámara captura cosas que otros se pierden. Ves el mundo de una manera única.' },
+      { icon:'🎤', text:'Cuando cantas, el tiempo se detiene. Tu voz tiene algo que no se puede explicar, solo sentir.' },
+      { icon:'💙', text:'El azul te queda porque eres profunda como el océano y serena como el cielo más despejado.' },
+      { icon:'🖤', text:'El negro que vistes no es oscuridad — es elegancia, misterio y una seguridad en ti misma que admiro.' }
+    ],
+    finale: 'Eres el girasol más bonito en el jardín de mi vida.'
+  },
+  2026: {
+    letter: `Mi Jenny hermosa,<br><br>
+      <em>24 años</em> de ser exactamente quien eres — y eso es extraordinario.
+      Cada año que pasa te vuelves más tú: más segura, más brillante, más Jenny.
+      Tu fe mueve cosas que los demás ni ven, y tu corazón cabe el mundo entero.<br><br>
+      Que este año venga con girasoles en cada camino, con los mejores gatos del
+      universo a tu lado, y con toda la paz que mereces.
+      <strong>Eres increíble, y hoy el mundo lo celebra.</strong>`,
+    reasons: [
+      { icon:'🌻', text:'A los 24 sigues siendo la misma luz de siempre, pero más intensa, más real, más tú.' },
+      { icon:'🐱', text:'Los gatos te eligen a ti porque saben reconocer a las personas con buen corazón.' },
+      { icon:'🎤', text:'Tu voz este año sonó más bonita que nunca. Cada nota que cantas lleva algo tuyo.' },
+      { icon:'📷', text:'Cada foto que tomas es un mundo que salvaste del olvido. Eso es un regalo enorme.' },
+      { icon:'💙', text:'Tienes la profundidad del azul más oscuro y la claridad del cielo más abierto.' },
+      { icon:'🖤', text:'El negro que llevas es tu firma — elegante, intencional, completamente tuya.' }
+    ],
+    finale: 'Eres la canción que no puedo sacarme de la cabeza.'
+  },
+  2027: {
+    letter: `Jenny,<br><br>
+      <em>25 años</em> — un cuarto de siglo siendo de las personas más especiales que existen.
+      Verte crecer es como ver florecer un girasol en tiempo real: despacio, con gracia,
+      sin apuro, pero inevitable y hermoso.<br><br>
+      Que este año te traiga todo lo que buscas: momentos de paz junto a un gato
+      ronroneando, luz perfecta para fotografiar, y canciones que solo tú sabes cantar.
+      <strong>Feliz cumpleaños. El mundo es mejor contigo en él.</strong>`,
+    reasons: [
+      { icon:'🌻', text:'25 años de dar luz a todo lo que tocas — eso no es poca cosa.' },
+      { icon:'🐱', text:'Tu calma y tu calidez son exactamente lo que el mundo necesita más.' },
+      { icon:'📷', text:'Tienes un ojo para la belleza que muy poca gente desarrolla en toda su vida.' },
+      { icon:'🎤', text:'Cantas con una honestidad que llega directo al corazón. Eso no se finge.' },
+      { icon:'💙', text:'Eres tranquila como el azul profundo y luminosa como el azul del mediodía.' },
+      { icon:'🖤', text:'Tu estilo de negro es tuyo — no lo copias de nadie, simplemente lo eres.' }
+    ],
+    finale: 'Cada año que cumples, el universo gana algo mejor.'
+  }
+  // ← Agrega 2028, 2029... con el mismo formato
+};
 
-// Initialize particles.js
-particlesJS("particles-js", {
-    "particles": {
-        "number": {
-            "value": 40,
-            "density": {
-                "enable": true,
-                "value_area": 800
-            }
-        },
-        "color": {
-            "value": "#f06292"
-        },
-        "shape": {
-            "type": "circle",
-            "stroke": {
-                "width": 0,
-                "color": "#000000"
-            }
-        },
-        "opacity": {
-            "value": 0.6,
-            "random": true,
-            "anim": {
-                "enable": true,
-                "speed": 1,
-                "opacity_min": 0.1,
-                "sync": false
-            }
-        },
-        "size": {
-            "value": 6,
-            "random": true,
-            "anim": {
-                "enable": true,
-                "speed": 2,
-                "size_min": 0.1,
-                "sync": false
-            }
-        },
-        "line_linked": {
-            "enable": true,
-            "distance": 150,
-            "color": "#f8bbd0",
-            "opacity": 0.4,
-            "width": 1.5
-        },
-        "move": {
-            "enable": true,
-            "speed": 1.5,
-            "direction": "none",
-            "random": true,
-            "straight": false,
-            "out_mode": "out",
-            "bounce": false,
-            "attract": {
-                "enable": true,
-                "rotateX": 600,
-                "rotateY": 1200
-            }
-        }
-    },
-    "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-            "onhover": {
-                "enable": true,
-                "mode": "grab"
-            },
-            "onclick": {
-                "enable": true,
-                "mode": "push"
-            },
-            "resize": true
-        },
-        "modes": {
-            "grab": {
-                "distance": 160,
-                "line_linked": {
-                    "opacity": 1
-                }
-            },
-            "push": {
-                "particles_nb": 6
-            }
-        }
-    },
-    "retina_detect": true
-});
-
-// Initialize GSAP animations
-document.addEventListener('DOMContentLoaded', function() {
-    showStep(currentStep);
-    createPetals();
-    
-    // Animate the heart message
-    const heartMessage = document.getElementById('heartMessage');
-    document.getElementById('interactiveHeart').addEventListener('click', function() {
-        setTimeout(() => {
-            heartMessage.classList.add('show');
-        }, 500);
-    });
-    
-    // Set countdown (example: next 24 hours)
-    setCountdown();
-});
-
-// Function to show current step
-function showStep(step) {
-    // Hide all steps
-    document.querySelectorAll('.step').forEach(el => {
-        el.classList.remove('active');
-    });
-    
-    // Show current step
-    const currentStepEl = document.getElementById(`step${step}`);
-    currentStepEl.classList.add('active');
-    
-    // Update progress bar
-    const progressPercentage = ((step - 1) / (totalSteps - 1)) * 100;
-    gsap.to("#progressBar", {
-        width: `${progressPercentage}%`,
-        duration: 1,
-        ease: "power2.out"
-    });
-    
-    // Special animations for each step
-    switch(step) {
-        case 1:
-            // Animate envelope
-            gsap.from("#envelope", {
-                y: 100,
-                opacity: 0,
-                duration: 1,
-                ease: "back.out(1.7)"
-            });
-            break;
-        case 2:
-            // Animate input
-            gsap.from(".name-input", {
-                scale: 0.5,
-                opacity: 0,
-                duration: 0.8,
-                ease: "elastic.out(1, 0.5)"
-            });
-            break;
-        case 3:
-            // Animate heart
-            gsap.from("#interactiveHeart", {
-                scale: 0.5,
-                rotation: 180,
-                duration: 1,
-                ease: "elastic.out(1, 0.5)"
-            });
-            document.getElementById('heartName').textContent = userName;
-            break;
-        case 4:
-            // Type out message
-            typeMessage();
-            // Animate photo frame
-            gsap.from(".photo-frame", {
-                y: 50,
-                rotation: -10,
-                opacity: 0,
-                duration: 1,
-                ease: "back.out(1.7)"
-            });
-            break;
-        case 5:
-            // Animate polaroids
-            gsap.from(".polaroid", {
-                y: 100,
-                opacity: 0,
-                stagger: 0.2,
-                duration: 1,
-                ease: "back.out(1.7)"
-            });
-            break;
-        case 6:
-            // Create fireworks
-            createFireworks();
-            // Animate final heart
-            gsap.from(".heart", {
-                scale: 0,
-                duration: 1.5,
-                ease: "elastic.out(1, 0.5)"
-            });
-            break;
-    }
+function getContent(year) {
+  if (CONTENT[year]) return CONTENT[year];
+  const age = year - BIRTH_YEAR;
+  return {
+    letter: `Jenny,<br><br>
+      <em>${age} años</em> de existencia pura y extraordinaria.
+      Cada cumpleaños tuyo es una prueba de que las personas que dan luz
+      al mundo merecen ser celebradas en grande.<br><br>
+      Que este <strong>${year}</strong> te traiga girasoles en cada esquina,
+      gatos ronroneando a tu lado, y toda la alegría que mereces.`,
+    reasons: [
+      { icon:'🌻', text:`${age} años siendo la persona más especial que conozco.` },
+      { icon:'🐱', text:'Los gatos siguen eligiéndote — saben lo que hacen.' },
+      { icon:'📷', text:'Tu manera de ver el mundo a través del lente sigue siendo única.' },
+      { icon:'🎤', text:'Tu voz sigue siendo de las cosas más bonitas que existen.' },
+      { icon:'💙', text:'Profunda como el azul, luminosa como siempre.' },
+      { icon:'🖤', text:'Elegante, real y completamente tú.' }
+    ],
+    finale: `Año ${year}: el mejor, porque lo vives tú.`
+  };
 }
 
-// Function to go to next step
-function nextStep() {
-    if (currentStep < totalSteps) {
-        currentStep++;
-        showStep(currentStep);
-        
-        // Open envelope if on step 1
-        if (currentStep === 2) {
-            document.getElementById('envelope').classList.add('open');
-        }
-    }
-}
+/* ── INICIALIZACIÓN ── */
+const NOW  = new Date();
+const YEAR = NOW.getFullYear();
+const AGE  = YEAR - BIRTH_YEAR;
+const DATA = getContent(YEAR);
+let musicOn = false;
 
-// Function to save name
-function saveName() {
-    const nameInput = document.getElementById('nameInput').value.trim();
-    if (nameInput) {
-        userName = nameInput;
-        document.getElementById('displayName').textContent = userName;
-        document.getElementById('finalName').textContent = userName;
-        document.getElementById('heartName').textContent = userName;
-        nextStep();
-        
-        // Animate success
-        gsap.to(".name-input", {
-            backgroundColor: "#e8f5e9",
-            borderColor: "#81c784",
-            duration: 0.5,
-            yoyo: true,
-            repeat: 1
-        });
+// Rellenar DOM
+document.getElementById('heroYear').textContent    = YEAR;
+document.getElementById('ageOrb').textContent      = `${AGE} años de pura magia 🌸`;
+document.getElementById('finaleYear').textContent  = YEAR;
+document.getElementById('footerYear').textContent  = YEAR;
+document.getElementById('letterText').innerHTML    = DATA.letter;
+document.getElementById('finaleQuote').textContent = DATA.finale;
+
+// Tarjetas de razones
+const grid = document.getElementById('reasonsGrid');
+DATA.reasons.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = 'reason-card';
+  card.innerHTML = `
+    <span class="reason-icon">${r.icon}</span>
+    <div class="reason-num">0${i + 1}</div>
+    <p class="reason-text">${r.text}</p>`;
+  grid.appendChild(card);
+});
+
+/* ══════════════════════════════════════════════════════════
+   PÉTALOS SVG CAYENDO — hermosos y reales
+══════════════════════════════════════════════════════════ */
+const canvas = document.getElementById('petalCanvas');
+const ctx    = canvas.getContext('2d');
+let W, H;
+
+function resizeCanvas() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Colores de pétalos vivos
+const PETAL_COLORS = [
+  '#ff6b9d', '#ff3d7f', '#ff8fb1', '#ffb3d1',
+  '#ff6b4a', '#ffb347', '#ff80aa', '#e040fb',
+  '#ff4081', '#ff80ab', '#f48fb1', '#f06292'
+];
+
+class Petal {
+  constructor() { this.reset(true); }
+
+  reset(initial = false) {
+    this.x    = Math.random() * W;
+    this.y    = initial ? Math.random() * H : -40;
+    this.size = Math.random() * 14 + 8;
+    this.speedY = Math.random() * 1.5 + 0.6;
+    this.speedX = (Math.random() - 0.5) * 1.2;
+    this.angle  = Math.random() * Math.PI * 2;
+    this.spin   = (Math.random() - 0.5) * 0.06;
+    this.sway   = Math.random() * 0.04 + 0.01;
+    this.swayOffset = Math.random() * Math.PI * 2;
+    this.opacity = Math.random() * 0.5 + 0.45;
+    this.color  = PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
+    this.t      = 0;
+    // Forma del pétalo: 0=oval, 1=redondo, 2=alargado
+    this.shape  = Math.floor(Math.random() * 3);
+  }
+
+  update() {
+    this.t += 0.02;
+    this.y += this.speedY;
+    this.x += this.speedX + Math.sin(this.t * this.sway + this.swayOffset) * 0.8;
+    this.angle += this.spin;
+    if (this.y > H + 40 || this.x < -80 || this.x > W + 80) this.reset();
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.globalAlpha = this.opacity;
+
+    // Sombra suave
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur  = 6;
+
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+
+    if (this.shape === 0) {
+      // Pétalo de rosa: forma elíptica con curva bezier
+      const s = this.size;
+      ctx.moveTo(0, -s);
+      ctx.bezierCurveTo( s * 0.7, -s * 0.5,  s * 0.8, s * 0.3,  0, s);
+      ctx.bezierCurveTo(-s * 0.8,  s * 0.3, -s * 0.7, -s * 0.5,  0, -s);
+    } else if (this.shape === 1) {
+      // Pétalo redondo
+      ctx.ellipse(0, 0, this.size * 0.6, this.size, 0, 0, Math.PI * 2);
     } else {
-        // Animate error
-        gsap.to(".name-input", {
-            backgroundColor: "#ffebee",
-            borderColor: "#e53935",
-            duration: 0.5,
-            yoyo: true,
-            repeat: 1
-        });
-        alert("Por favor ingrese su hermoso nombre para continuar");
+      // Pétalo delgado
+      const s = this.size;
+      ctx.moveTo(0, -s * 1.1);
+      ctx.bezierCurveTo(s * 0.5, -s * 0.4,  s * 0.4, s * 0.5,  0, s * 1.1);
+      ctx.bezierCurveTo(-s * 0.4, s * 0.5, -s * 0.5, -s * 0.4,  0, -s * 1.1);
     }
+
+    ctx.fill();
+
+    // Brillo interior del pétalo
+    ctx.globalAlpha = this.opacity * 0.4;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.ellipse(-this.size * 0.15, -this.size * 0.25,
+                this.size * 0.18, this.size * 0.35, -0.4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
 }
 
-// Function to create floating hearts
-function createHearts() {
-    const container = document.getElementById('floatingHearts');
-    const colors = ['#ff4081', '#f06292', '#f8bbd0', '#d81b60', '#ff80ab'];
-    
-    for (let i = 0; i < 25; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('floating-heart');
-        heart.innerHTML = '❤';
-        heart.style.left = `${Math.random() * 100}%`;
-        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-        heart.style.animationDuration = `${3 + Math.random() * 3}s`;
-        heart.style.fontSize = `${20 + Math.random() * 25}px`;
-        heart.style.top = `${60 + Math.random() * 30}%`;
-        
-        container.appendChild(heart);
-        
-        // Remove heart after animation completes
-        setTimeout(() => {
-            heart.remove();
-        }, 4000);
+const petals = Array.from({ length: 55 }, () => new Petal());
+
+function animatePetals() {
+  ctx.clearRect(0, 0, W, H);
+  petals.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animatePetals);
+}
+animatePetals();
+
+/* ══════════════════════════════════════════════════════════
+   BOKEH CIRCLES
+══════════════════════════════════════════════════════════ */
+const bokehColors = [
+  'rgba(255,107,157,0.6)', 'rgba(255,184,0,0.5)',
+  'rgba(199,125,255,0.5)', 'rgba(72,202,228,0.45)',
+  'rgba(255,107,74,0.5)',  'rgba(255,128,170,0.55)'
+];
+const bokehLayer = document.getElementById('bokehLayer');
+for (let i = 0; i < 18; i++) {
+  const el = document.createElement('div');
+  el.className = 'bokeh-circle';
+  const size = 40 + Math.random() * 120;
+  el.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random() * 100}%;
+    top:${Math.random() * 100}%;
+    background:${bokehColors[i % bokehColors.length]};
+    animation-duration:${12 + Math.random() * 16}s;
+    animation-delay:${Math.random() * 10}s;
+  `;
+  bokehLayer.appendChild(el);
+}
+
+/* ══════════════════════════════════════════════════════════
+   MARIPOSAS ANIMADAS SVG
+══════════════════════════════════════════════════════════ */
+const butterflyColors = [
+  ['#ff6b9d','#ffb347'], ['#a855f7','#ec4899'],
+  ['#06b6d4','#6366f1'], ['#f43f5e','#f97316'],
+  ['#8b5cf6','#ec4899'], ['#fbbf24','#ef4444']
+];
+
+function createButterfly() {
+  const container = document.getElementById('butterflies');
+  const [c1, c2]  = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
+  const size       = 28 + Math.random() * 28;
+  const startX     = -80;
+  const startY     = 60 + Math.random() * (window.innerHeight * 0.65);
+  const duration   = 12 + Math.random() * 14;
+  const waveAmp    = 40 + Math.random() * 60;
+
+  const el = document.createElement('div');
+  el.style.cssText = `
+    position: absolute;
+    left: ${startX}px; top: ${startY}px;
+    width: ${size * 2.2}px; height: ${size}px;
+    pointer-events: none;
+    animation: bflyTravel ${duration}s linear forwards;
+    z-index: 2;
+  `;
+
+  // SVG mariposa con 2 alas y cuerpo
+  el.innerHTML = `
+  <svg viewBox="0 0 100 60" width="${size * 2.2}" height="${size}"
+       xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="wL${Date.now()}" cx="60%" cy="40%">
+        <stop offset="0%" stop-color="${c2}" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="${c1}" stop-opacity=".75"/>
+      </radialGradient>
+      <radialGradient id="wR${Date.now()}" cx="40%" cy="40%">
+        <stop offset="0%" stop-color="${c2}" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="${c1}" stop-opacity=".75"/>
+      </radialGradient>
+    </defs>
+    <!-- Ala izquierda superior -->
+    <ellipse cx="30" cy="22" rx="28" ry="18"
+             fill="url(#wL${Date.now()})" opacity=".9"
+             transform="rotate(-20,30,22)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="-20,30,22;-5,30,22;-20,30,22" dur=".35s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Ala izquierda inferior -->
+    <ellipse cx="28" cy="40" rx="20" ry="13"
+             fill="${c1}" opacity=".75"
+             transform="rotate(15,28,40)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="15,28,40;28,28,40;15,28,40" dur=".35s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Ala derecha superior -->
+    <ellipse cx="70" cy="22" rx="28" ry="18"
+             fill="url(#wR${Date.now()})" opacity=".9"
+             transform="rotate(20,70,22)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="20,70,22;5,70,22;20,70,22" dur=".35s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Ala derecha inferior -->
+    <ellipse cx="72" cy="40" rx="20" ry="13"
+             fill="${c1}" opacity=".75"
+             transform="rotate(-15,72,40)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="-15,72,40;-28,72,40;-15,72,40" dur=".35s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Cuerpo -->
+    <ellipse cx="50" cy="32" rx="3.5" ry="14" fill="#3d1c2e" opacity=".8"/>
+    <!-- Antenas -->
+    <line x1="50" y1="18" x2="38" y2="6" stroke="#3d1c2e" stroke-width="1.2" opacity=".7"/>
+    <circle cx="38" cy="6" r="2.5" fill="${c2}" opacity=".9"/>
+    <line x1="50" y1="18" x2="62" y2="6" stroke="#3d1c2e" stroke-width="1.2" opacity=".7"/>
+    <circle cx="62" cy="6" r="2.5" fill="${c2}" opacity=".9"/>
+  </svg>`;
+
+  // Keyframes dinámicos para el vuelo ondulante
+  const keyframeName = `bflyTravel_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  const sheet = document.styleSheets[0] || document.head.appendChild(document.createElement('style')).sheet;
+  const endX  = window.innerWidth + 120;
+  try {
+    sheet.insertRule(`
+      @keyframes ${keyframeName} {
+        0%   { transform: translate(0px, 0px); opacity:0; }
+        5%   { opacity:1; }
+        25%  { transform: translate(${endX*.25}px, ${-waveAmp}px); }
+        50%  { transform: translate(${endX*.5}px, ${waveAmp*.5}px); }
+        75%  { transform: translate(${endX*.75}px, ${-waveAmp*.7}px); }
+        95%  { opacity:.8; }
+        100% { transform: translate(${endX}px, 0px); opacity:0; }
+      }`, sheet.cssRules.length);
+    el.style.animation = `${keyframeName} ${duration}s ease-in-out forwards`;
+  } catch(e) {
+    el.style.animation = `bflyTravel ${duration}s linear forwards`;
+  }
+
+  container.appendChild(el);
+  setTimeout(() => el.remove(), duration * 1000 + 500);
+}
+
+// Lanza mariposas periódicamente
+createButterfly();
+setInterval(createButterfly, 4000);
+
+/* ══════════════════════════════════════════════════════════
+   SPARKLES alrededor de la foto
+══════════════════════════════════════════════════════════ */
+const sparkleContainer = document.getElementById('photoSparkles');
+for (let i = 0; i < 10; i++) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  const angle = (i / 10) * 360;
+  const radius = 48 + Math.random() * 20;
+  const x = 50 + radius * Math.cos((angle * Math.PI) / 180);
+  const y = 50 + radius * Math.sin((angle * Math.PI) / 180);
+  s.style.cssText = `
+    left:${x}%; top:${y}%;
+    width:${6 + Math.random() * 6}px;
+    height:${6 + Math.random() * 6}px;
+    background: ${PETAL_COLORS[i % PETAL_COLORS.length]};
+    box-shadow: 0 0 8px ${PETAL_COLORS[i % PETAL_COLORS.length]};
+    animation: sparklePop ${1.5 + Math.random()}s ease-in-out ${Math.random()}s infinite;
+  `;
+  sparkleContainer.appendChild(s);
+}
+
+// Agregar keyframe sparklePop
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes sparklePop {
+    0%,100%{ transform:scale(1) rotate(0deg); opacity:.6; }
+    50%    { transform:scale(1.8) rotate(180deg); opacity:1; }
+  }
+  @keyframes bflyTravel {
+    from { transform:translateX(0); opacity:0; }
+    5%   { opacity:1; }
+    95%  { opacity:.8; }
+    to   { transform:translateX(120vw); opacity:0; }
+  }
+`;
+document.head.appendChild(style);
+
+/* ══════════════════════════════════════════════════════════
+   COUNTDOWN — corregido: NO bloquea la página
+══════════════════════════════════════════════════════════ */
+function isBday() {
+  const n = new Date();
+  return n.getMonth() + 1 === BDAY_MONTH && n.getDate() === BDAY_DAY;
+}
+function nextBday() {
+  const n = new Date();
+  let t = new Date(n.getFullYear(), BDAY_MONTH - 1, BDAY_DAY, 0, 0, 0);
+  if (n >= t) t.setFullYear(t.getFullYear() + 1);
+  return t;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+
+if (isBday()) {
+  // Muestra mensaje y agrega fuegos como decoración de fondo
+  document.getElementById('cdGrid').style.display  = 'none';
+  document.getElementById('bdayMsg').style.display = 'block';
+  launchFWDecoration();
+} else {
+  function tick() {
+    const diff = nextBday() - new Date();
+    if (diff <= 0) { location.reload(); return; }
+    document.getElementById('cdD').textContent = pad(Math.floor(diff / 86400000));
+    document.getElementById('cdH').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    document.getElementById('cdM').textContent = pad(Math.floor((diff % 3600000) / 60000));
+    document.getElementById('cdS').textContent = pad(Math.floor((diff % 60000) / 1000));
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FUEGOS — solo decorativos, SIN bloquear nada
+══════════════════════════════════════════════════════════ */
+function launchFWDecoration() {
+  const fw = document.createElement('canvas');
+  fw.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2;';
+  fw.width = window.innerWidth; fw.height = window.innerHeight;
+  window.addEventListener('resize', () => {
+    fw.width = window.innerWidth; fw.height = window.innerHeight;
+  });
+  document.body.insertBefore(fw, document.body.firstChild);
+  const fc = fw.getContext('2d');
+  let ps = [];
+  const cols = ['#ff6b9d','#ffb347','#c77dff','#48cae4','#ff6b4a','#ff80aa'];
+
+  function shoot() {
+    const x = Math.random() * fw.width;
+    const y = 80 + Math.random() * fw.height * 0.4;
+    for (let i = 0; i < 45; i++) {
+      const a = (i / 45) * Math.PI * 2, sp = 2 + Math.random() * 3.5;
+      ps.push({ x, y, vx: Math.cos(a)*sp, vy: Math.sin(a)*sp,
+                life: 1, color: cols[Math.floor(Math.random()*cols.length)] });
     }
-    
-    // Animate heart click
-    gsap.to("#interactiveHeart", {
-        scale: 1.3,
-        duration: 0.3,
-        yoyo: true,
-        repeat: 1
+  }
+  function anim() {
+    fc.fillStyle = 'rgba(255,240,245,0.12)';
+    fc.fillRect(0, 0, fw.width, fw.height);
+    ps.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy; p.vy+=.035; p.life-=.012;
+      fc.globalAlpha = Math.max(0, p.life);
+      fc.fillStyle   = p.color;
+      fc.beginPath(); fc.arc(p.x, p.y, 2.5, 0, Math.PI*2); fc.fill();
     });
+    fc.globalAlpha = 1;
+    ps = ps.filter(p => p.life > 0);
+    requestAnimationFrame(anim);
+  }
+  for (let i = 0; i < 4; i++) setTimeout(shoot, i * 700);
+  setInterval(() => { if (Math.random() > .5) shoot(); }, 2200);
+  anim();
 }
 
-// Function to create falling petals
-function createPetals() {
-    const container = document.getElementById('petalsContainer');
-    const petalColors = ['#ffcdd2', '#f8bbd0', '#fce4ec', '#f48fb1'];
-    
-    for (let i = 0; i < 15; i++) {
-        const petal = document.createElement('div');
-        petal.classList.add('petal');
-        
-        // Random petal shape
-        const petalType = Math.floor(Math.random() * 3);
-        let petalShape;
-        switch(petalType) {
-            case 0:
-                petalShape = "M50,0 C60,15 60,30 50,45 C40,30 40,15 50,0";
-                break;
-            case 1:
-                petalShape = "M50,0 C70,20 70,40 50,50 C30,40 30,20 50,0";
-                break;
-            case 2:
-                petalShape = "M50,0 C55,10 55,25 50,35 C45,25 45,10 50,0";
-                break;
-        }
-        
-        petal.style.width = `${10 + Math.random() * 20}px`;
-        petal.style.height = `${10 + Math.random() * 20}px`;
-        petal.style.left = `${Math.random() * 100}%`;
-        petal.style.top = `-20px`;
-        petal.style.fill = petalColors[Math.floor(Math.random() * petalColors.length)];
-        petal.style.opacity = 0.7 + Math.random() * 0.3;
-        
-        // Create SVG for petal
-        petal.innerHTML = `
-            <svg viewBox="0 0 100 50" width="100%" height="100%">
-                <path d="${petalShape}" fill="${petalColors[Math.floor(Math.random() * petalColors.length)]}" />
-            </svg>
-        `;
-        
-        container.appendChild(petal);
-        
-        // Animate petal falling
-        const duration = 10 + Math.random() * 20;
-        const delay = Math.random() * 15;
-        const sway = 50 + Math.random() * 100;
-        
-        gsap.to(petal, {
-            y: window.innerHeight + 50,
-            x: `+=${sway}`,
-            rotation: 360,
-            duration: duration,
-            delay: delay,
-            ease: "none",
-            onComplete: () => {
-                // Reset petal to top
-                petal.style.top = `-20px`;
-                petal.style.left = `${Math.random() * 100}%`;
-                // Repeat animation
-                gsap.to(petal, {
-                    y: window.innerHeight + 50,
-                    x: `+=${sway}`,
-                    rotation: 360,
-                    duration: duration,
-                    ease: "none",
-                    onComplete: () => {
-                        petal.remove();
-                    }
-                });
-            }
-        });
-    }
-}
+/* ══════════════════════════════════════════════════════════
+   MÚSICA
+══════════════════════════════════════════════════════════ */
+const audio    = document.getElementById('bgAudio');
+const musicBtn = document.getElementById('musicBtn');
+musicBtn.addEventListener('click', () => {
+  if (musicOn) {
+    audio.pause();
+    musicBtn.querySelector('.music-icon').textContent = '♪';
+    musicBtn.classList.remove('on');
+  } else {
+    audio.play().catch(() => {});
+    musicBtn.querySelector('.music-icon').textContent = '♫';
+    musicBtn.classList.add('on');
+  }
+  musicOn = !musicOn;
+});
 
-// Function to type out message
-function typeMessage() {
-    const messages = [
-        `Dear ${userName},`,
-        "En tu día especial, quiero que sepas...",
-        "Eres la persona más increíble que he conocido..",
-        "No hay constelación más bonita que tu sonrisa..",
-        "Tus ojos color miel son el encanto más dulce que existe..",
-        "Estoy tan agradecido de haberte conocido.",
-        "Que este año te traiga toda la alegría que mereces.",
-        "Aunque lo que tú mereces no cabe en este mundo.",
-        "Feliz cumpleaños Jenny! ❤"
-    ];
-    
-    const typingText = document.getElementById('typingText');
-    let messageIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
-    
-    function type() {
-        const currentMessage = messages[messageIndex];
-        
-        if (isDeleting) {
-            typingText.innerHTML = currentMessage.substring(0, charIndex - 1);
-            charIndex--;
-            typingSpeed = 50;
-        } else {
-            typingText.innerHTML = currentMessage.substring(0, charIndex + 1);
-            charIndex++;
-            typingSpeed = 100;
-        }
-        
-        if (!isDeleting && charIndex === currentMessage.length) {
-            isDeleting = true;
-            typingSpeed = 1500; // Pause at end of message
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            messageIndex = (messageIndex + 1) % messages.length;
-            typingSpeed = 500; // Pause before next message
-        }
-        
-        setTimeout(type, typingSpeed);
-    }
-    
-    // Start typing after a short delay
-    setTimeout(() => {
-        document.getElementById('typedMessage').classList.add('show');
-        type();
-    }, 500);
-}
+/* ══════════════════════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════════════════════ */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
-// Function to create fireworks
-function createFireworks() {
-    // Create initial fireworks
-    for (let i = 0; i < 8; i++) {
-        setTimeout(() => {
-            createFirework();
-        }, i * 800);
-    }
-    
-    // Continue with occasional fireworks
-    setInterval(() => {
-        if (Math.random() > 0.7) {
-            createFirework();
-        }
-    }, 2000);
-}
-
-function createFirework() {
-    const colors = ['#ff4081', '#f06292', '#f8bbd0', '#d81b60', '#ff80ab', '#ffcdd2'];
-    
-    // Create firework center
-    const firework = document.createElement('div');
-    firework.classList.add('firework');
-    firework.style.color = colors[Math.floor(Math.random() * colors.length)];
-    firework.style.setProperty('--x', `${Math.random() * window.innerWidth}px`);
-    firework.style.setProperty('--y', `${Math.random() * window.innerHeight * 0.8}px`);
-    firework.style.setProperty('--x-end', `${(Math.random() - 0.5) * 20}px`);
-    firework.style.setProperty('--y-end', `${(Math.random() - 0.5) * 20}px`);
-    
-    document.body.appendChild(firework);
-    
-    // Create particles
-    setTimeout(() => {
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('firework-particle');
-            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            particle.style.left = firework.style.getPropertyValue('--x');
-            particle.style.top = firework.style.getPropertyValue('--y');
-            particle.style.setProperty('--tx', `${Math.cos(i * 0.2) * 100}px`);
-            particle.style.setProperty('--ty', `${Math.sin(i * 0.2) * 100}px`);
-            
-            document.body.appendChild(particle);
-            
-            // Remove after animation
-            setTimeout(() => {
-                particle.remove();
-            }, 1000);
-        }
-        
-        firework.remove();
-    }, 1000);
-}
-
-// Function to set countdown
-function setCountdown() {
-    // Set target date (next 24 hours from now)
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 1);
-    
-    function updateCountdown() {
-        const now = new Date();
-        const diff = targetDate - now;
-        
-        if (diff <= 0) {
-            document.getElementById('countdown').innerHTML = "<span>Happy Birthday!</span>";
-            return;
-        }
-        
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
-        document.getElementById('days').textContent = days.toString().padStart(2, '0');
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-    }
-    
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-}
-
-
-
-// Function to share on social media
-function shareOnSocial(platform) {
-    let url = '';
-    const text = `Check out this beautiful birthday wish for ${userName}! ${window.location.href}`;
-    
-    switch(platform) {
-        case 'facebook':
-            url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-            break;
-        case 'twitter':
-            url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-            break;
-        case 'whatsapp':
-            url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-            break;
-    }
-    
-    window.open(url, '_blank', 'width=600,height=400');
-    
-    // Animate share button
-    gsap.to(`.social-icon:nth-child(${['facebook', 'twitter', 'whatsapp'].indexOf(platform) + 1})`, {
-        scale: 1.3,
-        duration: 0.3,
-        yoyo: true,
-        repeat: 1
-    });
-}
-
-// Obtiene el elemento de audio
-const bgMusic = document.getElementById('bgMusic');
-
-// Variable para saber si la música ya se reprodujo
-let hasPlayed = false;
-
-// Función para reproducir la música
-function playMusic() {
-    // Si la música ya se reprodujo, no hagas nada
-    if (hasPlayed) return;
-
-    bgMusic.play().then(() => {
-        // La música se reprodujo exitosamente
-        console.log("Música iniciada por interacción del usuario.");
-        hasPlayed = true;
-    }).catch(error => {
-        // Hubo un error (el navegador lo bloqueó de nuevo, etc.)
-        console.error("Error al intentar reproducir la música:", error);
-    });
-}
-
-// Escucha el primer evento de clic o toque en el documento
-document.addEventListener('click', playMusic, { once: true });
-document.addEventListener('touchstart', playMusic, { once: true });
+/* ══════════════════════════════════════════════════════════
+   LOADER
+══════════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hide');
+    document.getElementById('app').classList.add('show');
+  }, 2000);
+});
