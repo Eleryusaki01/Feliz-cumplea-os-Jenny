@@ -18,19 +18,18 @@
   <div id="loader">
     <div class="loader-inner">
       <div class="loader-rose">🌹</div>
-      <div class="loader-dots">
-        <span></span><span></span><span></span>
-      </div>
+      <div class="loader-dots"><span></span><span></span><span></span></div>
       <p class="loader-text">Preparando algo especial para ti…</p>
     </div>
   </div>
 
-  <!-- MÚSICA -->
-  <audio id="bgAudio" loop>
+  <!-- MÚSICA — preload para que esté lista al primer gesto -->
+  <audio id="bgAudio" loop preload="auto">
     <source src="Christopher.mp3" type="audio/mpeg"/>
     <source src="CumpleJenny_2.mp3" type="audio/mpeg"/>
+    <source src="MyFavorita.mp3" type="audio/mpeg"/>
   </audio>
-  <button class="music-btn" id="musicBtn">
+  <button class="music-btn" id="musicBtn" title="Toca para escuchar música 🎵">
     <span class="music-icon">♪</span>
   </button>
 
@@ -45,30 +44,23 @@
         <span class="hf hf4">🌻</span>
         <span class="hf hf5">🌸</span>
       </div>
-
       <div class="hero-content">
         <div class="edition-tag">✨ Edición <span id="heroYear"></span> ✨</div>
-
         <h1 class="hero-title">
           <span class="title-for">Feliz Cumpleaños</span>
-          <span class="title-name" id="heroName">Jenny</span>
+          <span class="title-name">Jenny</span>
         </h1>
-
         <div class="hero-age-wrap">
           <div class="age-orb" id="ageOrb"></div>
         </div>
-
         <div class="hero-photo-container">
           <div class="photo-petals-ring">
-            <img src="Jenny_7.jpg" class="hero-photo" alt="Jenny"
-                 onerror="this.src='Jenny_6.jpg'"/>
+            <img src="Jenny_7.jpg" class="hero-photo" alt="Jenny" onerror="this.src='Jenny_6.jpg'"/>
             <div class="photo-glow-ring"></div>
           </div>
           <div class="sparkles" id="photoSparkles"></div>
         </div>
-
         <p class="hero-sub">Para la chica más especial que conozco 🐱🌻</p>
-
         <div class="scroll-hint">
           <span>Descubre tu regalo</span>
           <div class="scroll-arrow"></div>
@@ -114,36 +106,90 @@
     </section>
 
     <div class="petal-divider reveal">
-      <span>🦋</span><span>🌻</span><span>🦋</span><span>🌻</span><span>🦋</span>
+      <span>🌹</span><span>💌</span><span>🌹</span><span>💌</span><span>🌹</span>
     </div>
 
     <!-- ══ HISTORIA ══ -->
     <section class="story-section reveal">
       <div class="section-deco">🌹 · 💌 · 🌹</div>
-      <h2 class="section-title">Una historia para ti</h2>
-      <div class="story-card">
-        <div class="story-title">
-          <span class="story-rose">🌹</span>
-          El chico que quiso regalar su corazón
-          <span class="story-rose">🌹</span>
+      <h2 class="section-title">Una historia para ti, <em>Hadasha</em></h2>
+
+      <div class="story-wrap">
+
+        <!-- Capítulo 1 -->
+        <div class="story-chapter">
+          <div class="chapter-text">
+            <div class="chapter-num">I</div>
+            <h3 class="chapter-title">El día que todo cambió</h3>
+            <p>Había una vez un chico al que le costaba mucho hablar de lo que sentía. No era que no tuviera palabras — las tenía de sobra — sino que ninguna le parecía suficiente.</p>
+            <p>Un día de agosto, con el sol calentando fuerte y los girasoles mirando al cielo como siempre hacen, la vio por primera vez. Se llamaba <em>Hadasha</em>. Estaba ahí, tranquila, con su cabello negro cayendo sobre los hombros, vestida de negro como quien sabe exactamente quién es y no necesita colores extra para brillar.</p>
+            <p>Él no supo qué le pasó. Solo supo que el mundo se reorganizó en ese instante, sin pedirle permiso.</p>
+          </div>
+          <div class="chapter-img">
+            <img src="Jenny_7.jpg" alt="Hadasha" onerror="this.src='Jenny_6.jpg'"/>
+            <div class="chapter-img-caption">El momento en que todo cambió 🌻</div>
+          </div>
         </div>
-        <div class="story-body">
-          <p>Había una vez un chico que no sabía bien cómo hablar, pero sí sabía sentir.</p>
-          <p>Un día de agosto, mientras el sol calentaba fuerte y los girasoles miraban al cielo, conoció a una chica llamada <em>Hadasha</em>. No fue algo dramático — fue algo peor: fue algo real. Ella simplemente estaba ahí, con su cabello negro cayendo sobre los hombros, vestida de negro como quien no necesita más colores para brillar, y con una mirada que parecía guardar un universo entero adentro.</p>
-          <p>Él quiso decirle algo. Algo bonito, algo que estuviera a la altura de lo que sentía. Pero las palabras se le atascaban en la garganta cada vez que ella aparecía. Entonces decidió hacer lo único que sabía hacer bien: <em>construir.</em></p>
-          <p>Pasó noches enteras armando algo con código y letras. No era un regalo físico — no podía darle flores sin que se marchitaran, ni chocolates sin que se acabaran. Quería darle algo que durara. Algo que el 7 de agosto de cada año le dijera, sin que él tuviera que estar presente: <strong>"sigues siendo la persona más especial que conozco."</strong></p>
-          <p>Lo llamó <em>su corazón digital</em> — porque cada línea que escribía venía de ahí. Cada girasol animado era una cosa que admiraba de ella. Cada mariposa que cruzaba la pantalla era un pensamiento que no se atrevía a decirle en voz alta. Cada pétalo que caía era un "te noto, te veo, me importas."</p>
-          <p>Y aunque Hadasha quizás nunca supiera todo lo que ese chico sentía, él estaba seguro de una cosa:</p>
-          <p class="story-closing"><em>"Algunas personas llegan a tu vida y la reorganizan por completo, sin pedirte permiso. Hadasha fue esa persona para mí. Y este regalo, aunque pequeño, es todo mi corazón hecho página."</em></p>
+
+        <!-- Capítulo 2 -->
+        <div class="story-chapter story-chapter--reverse">
+          <div class="chapter-text">
+            <div class="chapter-num">II</div>
+            <h3 class="chapter-title">Ella no lo quería</h3>
+            <p>El problema era sencillo y doloroso al mismo tiempo: <em>ella no lo quería.</em></p>
+            <p>No era crueldad. Era honestidad. Hadasha era de esas personas que no fingen, que no dan falsas esperanzas, que prefieren decir la verdad aunque duela. Y eso, aunque le rompió algo por dentro, era justamente una de las cosas que él más admiraba de ella.</p>
+            <p>Había días en que él pensaba que si tan solo pudiera mostrarle lo que sentía — no con palabras torpes, sino de alguna manera que se quedara — quizás ella entendería. Pero Hadasha seguía su camino, con esa calma suya que era como el azul profundo del mar: hermosa desde lejos, inalcanzable de cerca.</p>
+          </div>
+          <div class="chapter-img">
+            <img src="Jenny_2.png" alt="Hadasha pensativa" onerror="this.src='Jenny_4.jpg'"/>
+            <div class="chapter-img-caption">Ella, siempre con su propio mundo 🌸</div>
+          </div>
         </div>
-        <div class="story-footer">
-          <span>— Borys 🌻</span>
+
+        <!-- Capítulo 3 -->
+        <div class="story-chapter">
+          <div class="chapter-text">
+            <div class="chapter-num">III</div>
+            <h3 class="chapter-title">La decisión</h3>
+            <p>Una noche, el chico tomó una decisión.</p>
+            <p>Si no podía darle su corazón de la manera que hubiera querido, se lo daría de otra forma. Empezó a construir — línea por línea, pétalo por pétalo — una página que cada 7 de agosto le dijera lo que él no se atrevía: <strong>"sigues siendo la persona más extraordinaria que conozco."</strong></p>
+            <p>No lo hizo para convencerla de nada. Lo hizo porque algunas personas merecen saber que su existencia importa, que hay alguien en algún lugar que nota cuando sonríen, que guarda sus fotos como pequeños tesoros, que escucha sus canciones favoritas pensando en ellas.</p>
+          </div>
+          <div class="chapter-img">
+            <img src="Jenny_4.jpg" alt="Hadasha sonriendo" onerror="this.src='Jenny_5.jpg'"/>
+            <div class="chapter-img-caption">Esa sonrisa que lo inspiró todo 🌊</div>
+          </div>
         </div>
+
+        <!-- Capítulo 4 -->
+        <div class="story-chapter story-chapter--reverse">
+          <div class="chapter-text">
+            <div class="chapter-num">IV</div>
+            <h3 class="chapter-title">Su corazón digital</h3>
+            <p>Cada girasol animado era algo que admiraba de ella. Cada mariposa que cruzaba la pantalla era un pensamiento que no se atrevía a decirle en voz alta. Cada pétalo que caía era un <em>"te noto, te veo, me importas."</em></p>
+            <p>Y la historia — esta historia — era para que ella supiera que el amor incondicional existe. Que hay alguien que la admira sin esperar nada a cambio. Que su cumpleaños será especial no porque el mundo lo dicte, sino porque hay un corazón que lo decide.</p>
+          </div>
+          <div class="chapter-img">
+            <img src="Jenny_5.jpg" alt="Hadasha con su cámara" onerror="this.src='Jenny_6.jpg'"/>
+            <div class="chapter-img-caption">La artista que captura el mundo 📷</div>
+          </div>
+        </div>
+
+        <!-- Cierre de la historia -->
+        <div class="story-ending">
+          <div class="story-ending-flowers">🌹 🌸 🌻 🌸 🌹</div>
+          <blockquote class="story-quote">
+            "No te pido que me quieras.<br/>
+            Solo te pido que sepas que eres amada — incondicional, completamente, sin fecha de vencimiento."
+          </blockquote>
+          <p class="story-ending-sign">— El chico que quiso regalarte su corazón 🌹</p>
+        </div>
+
       </div>
     </section>
 
     <div class="petal-divider reveal">
-      <span>🌹</span><span>🌸</span><span>🌹</span><span>🌸</span><span>🌹</span>
+      <span>🦋</span><span>🌻</span><span>🦋</span><span>🌻</span><span>🦋</span>
     </div>
 
     <!-- ══ GALERÍA ══ -->
