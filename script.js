@@ -4,15 +4,15 @@
 ═══════════════════════════════════════════════════════════ */
 
 /* ── CONFIGURACIÓN ── */
-const BDAY_MONTH = 5;
-const BDAY_DAY   = 21;
-const BIRTH_YEAR = 2002;
+const BDAY_MONTH = 8;    // Agosto
+const BDAY_DAY   = 7;    // día 7
+const BIRTH_YEAR = 2006; // Jenny nació el 07/08/2006
 
 /* ── CONTENIDO POR AÑO ── */
 const CONTENT = {
   2025: {
     letter: `Jenny,<br><br>
-      Hoy que cumples <em>23 años</em>, pienso en todo lo que haces sin darte cuenta:
+      Hoy que cumples <em>19 años</em>, pienso en todo lo que haces sin darte cuenta:
       iluminas cada cuarto con tu presencia, cantas con el alma y fotografías el mundo
       con unos ojos que ven belleza donde otros no ven nada.<br><br>
       Eres como un girasol — siempre buscas la luz, y se la das a todos los que están
@@ -30,14 +30,14 @@ const CONTENT = {
   },
   2026: {
     letter: `Mi Jenny hermosa,<br><br>
-      <em>24 años</em> de ser exactamente quien eres — y eso es extraordinario.
+      <em>20 años</em> de ser exactamente quien eres — y eso es extraordinario.
       Cada año que pasa te vuelves más tú: más segura, más brillante, más Jenny.
       Tu fe mueve cosas que los demás ni ven, y tu corazón cabe el mundo entero.<br><br>
       Que este año venga con girasoles en cada camino, con los mejores gatos del
       universo a tu lado, y con toda la paz que mereces.
       <strong>Eres increíble, y hoy el mundo lo celebra.</strong>`,
     reasons: [
-      { icon:'🌻', text:'A los 24 sigues siendo la misma luz de siempre, pero más intensa, más real, más tú.' },
+      { icon:'🌻', text:'A los 20 sigues siendo la misma luz de siempre, pero más intensa, más real, más tú.' },
       { icon:'🐱', text:'Los gatos te eligen a ti porque saben reconocer a las personas con buen corazón.' },
       { icon:'🎤', text:'Tu voz este año sonó más bonita que nunca. Cada nota que cantas lleva algo tuyo.' },
       { icon:'📷', text:'Cada foto que tomas es un mundo que salvaste del olvido. Eso es un regalo enorme.' },
@@ -48,14 +48,14 @@ const CONTENT = {
   },
   2027: {
     letter: `Jenny,<br><br>
-      <em>25 años</em> — un cuarto de siglo siendo de las personas más especiales que existen.
+      <em>21 años</em> — qué manera de llegar a la mayoría de edad siendo ya tan increíble.
       Verte crecer es como ver florecer un girasol en tiempo real: despacio, con gracia,
       sin apuro, pero inevitable y hermoso.<br><br>
       Que este año te traiga todo lo que buscas: momentos de paz junto a un gato
       ronroneando, luz perfecta para fotografiar, y canciones que solo tú sabes cantar.
       <strong>Feliz cumpleaños. El mundo es mejor contigo en él.</strong>`,
     reasons: [
-      { icon:'🌻', text:'25 años de dar luz a todo lo que tocas — eso no es poca cosa.' },
+      { icon:'🌻', text:'21 años de dar luz a todo lo que tocas — eso no es poca cosa.' },
       { icon:'🐱', text:'Tu calma y tu calidez son exactamente lo que el mundo necesita más.' },
       { icon:'📷', text:'Tienes un ojo para la belleza que muy poca gente desarrolla en toda su vida.' },
       { icon:'🎤', text:'Cantas con una honestidad que llega directo al corazón. Eso no se finge.' },
@@ -92,7 +92,12 @@ function getContent(year) {
 /* ── INICIALIZACIÓN ── */
 const NOW  = new Date();
 const YEAR = NOW.getFullYear();
-const AGE  = YEAR - BIRTH_YEAR;
+
+// Edad exacta: si el cumpleaños aún no ha pasado este año, resta 1
+const hasBdayPassed = (NOW.getMonth() + 1 > BDAY_MONTH) ||
+                      (NOW.getMonth() + 1 === BDAY_MONTH && NOW.getDate() >= BDAY_DAY);
+const AGE  = YEAR - BIRTH_YEAR - (hasBdayPassed ? 0 : 1);
+
 const DATA = getContent(YEAR);
 let musicOn = false;
 
@@ -462,22 +467,67 @@ function launchFWDecoration() {
   anim();
 }
 
+
 /* ══════════════════════════════════════════════════════════
-   MÚSICA
+   MÚSICA — autoplay real + botón latiente
 ══════════════════════════════════════════════════════════ */
-const audio    = document.getElementById('bgAudio');
-const musicBtn = document.getElementById('musicBtn');
-musicBtn.addEventListener('click', () => {
-  if (musicOn) {
-    audio.pause();
-    musicBtn.querySelector('.music-icon').textContent = '♪';
-    musicBtn.classList.remove('on');
-  } else {
-    audio.play().catch(() => {});
-    musicBtn.querySelector('.music-icon').textContent = '♫';
+const audio     = document.getElementById('bgAudio');
+const musicBtn  = document.getElementById('musicBtn');
+const musicIcon = musicBtn.querySelector('.music-icon');
+
+audio.volume = 0.75;
+
+// El botón late desde el inicio para que Jenny lo note
+musicBtn.classList.add('waiting');
+
+function playMusic() {
+  audio.play().then(() => {
+    musicOn = true;
+    musicIcon.textContent = '♫';
+    musicBtn.classList.remove('waiting');
     musicBtn.classList.add('on');
+  }).catch(() => {});
+}
+
+function stopMusic() {
+  audio.pause();
+  musicIcon.textContent = '♪';
+  musicBtn.classList.remove('on');
+  musicBtn.classList.add('waiting');
+  musicOn = false;
+}
+
+// Intenta reproducir automáticamente al cargar
+// Los navegadores lo permiten si el usuario ya interactuó antes con el sitio
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    audio.play().then(() => {
+      musicOn = true;
+      musicIcon.textContent = '♫';
+      musicBtn.classList.remove('waiting');
+      musicBtn.classList.add('on');
+    }).catch(() => {
+      // Navegador bloqueó autoplay: el botón sigue latiendo esperando primer clic
+      document.addEventListener('click', function firstClick() {
+        playMusic();
+        document.removeEventListener('click', firstClick);
+      });
+      document.addEventListener('touchstart', function firstTouch() {
+        playMusic();
+        document.removeEventListener('touchstart', firstTouch);
+      });
+    });
+  }, 2200); // Espera a que el loader termine
+});
+
+// Botón: clic para pausar/reanudar
+musicBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (musicOn) {
+    stopMusic();
+  } else {
+    playMusic();
   }
-  musicOn = !musicOn;
 });
 
 /* ══════════════════════════════════════════════════════════
