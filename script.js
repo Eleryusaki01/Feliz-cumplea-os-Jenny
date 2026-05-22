@@ -1,349 +1,536 @@
-/* ═══════════════════════════════════════════════════════════
-   script.js — Para Jenny 🌻
-   Sistema autónomo: cambia contenido automáticamente cada año
-═══════════════════════════════════════════════════════════ */
 
-/* ─────────────────────────────────────────────────────────
-   CONFIGURACIÓN
-───────────────────────────────────────────────────────── */
-const BDAY_MONTH = 5;
-const BDAY_DAY   = 21;
-const BIRTH_YEAR = 2002;
+// Initialize variables
+let currentStep = 1;
+const totalSteps = 6;
+let userName = "My Love";
 
-/* ─────────────────────────────────────────────────────────
-   CONTENIDO POR AÑO
-───────────────────────────────────────────────────────── */
-const CONTENT = {
 
-  2025: {
-    letter: `Jenny,<br><br>
-      Hoy que cumples <em>23 años</em>, pienso en todo lo que haces sin darte cuenta:
-      iluminas los cuartos con tu presencia, cantas con el alma y fotografías el mundo
-      con unos ojos que ven la belleza donde otros no ven nada.<br><br>
-      Eres como un girasol — siempre buscas la luz, y se la das a todos los que están
-      cerca de ti. <strong>Feliz cumpleaños, Jenny.</strong>`,
-    reasons: [
-      { icon: '🌻', text: 'Eres como los girasoles que amas: siempre orientada hacia la luz, sin importar qué tan oscuro esté el cielo.' },
-      { icon: '🐱', text: 'Tienes la ternura de los gatos — tranquila por fuera, con un mundo enorme por dentro.' },
-      { icon: '📷', text: 'Tu mirada detrás de la cámara captura cosas que otros se pierden. Ves el mundo de una manera única.' },
-      { icon: '🎤', text: 'Cuando cantas, el tiempo se detiene. Tu voz tiene algo que no se puede explicar, solo sentir.' },
-      { icon: '💙', text: 'El azul te queda porque eres profunda como el océano y serena como el cielo despejado.' },
-      { icon: '🖤', text: 'El negro que vistes no es oscuridad — es elegancia, misterio y una seguridad en ti misma que admiro.' }
-    ],
-    finale: 'Eres el girasol más bonito en el jardín de mi vida.'
-  },
-
-  2026: {
-    letter: `Mi Jenny hermosa,<br><br>
-      <em>24 años</em> de ser exactamente quien eres — y eso es extraordinario.
-      Cada año que pasa te vuelves más tú: más segura, más brillante, más Jenny.
-      Tu fe mueve cosas que los demás ni ven, y tu corazón cabe el mundo entero.<br><br>
-      Que este año que empieza para ti venga con girasoles en cada camino,
-      con los mejores gatos del universo a tu lado, y con toda la paz que mereces.
-      <strong>Eres increíble, y hoy el mundo lo celebra.</strong>`,
-    reasons: [
-      { icon: '🌻', text: 'A los 24 sigues siendo la misma luz de siempre, pero más intensa, más real, más tú.' },
-      { icon: '🐱', text: 'Los gatos te eligen a ti porque saben reconocer a las personas con buen corazón.' },
-      { icon: '🎤', text: 'Tu voz este año sonó más bonita que nunca. Cada nota que cantas lleva algo tuyo.' },
-      { icon: '📷', text: 'Cada foto que tomas es un mundo que salvaste del olvido. Eso es un regalo enorme.' },
-      { icon: '💙', text: 'Tienes la profundidad del azul más oscuro y la claridad del cielo más abierto.' },
-      { icon: '🖤', text: 'El negro que llevas es tu firma — elegante, intencional, completamente tuya.' }
-    ],
-    finale: 'Eres la canción que no puedo sacarme de la cabeza.'
-  },
-
-  2027: {
-    letter: `Jenny,<br><br>
-      <em>25 años</em> — un cuarto de siglo siendo de las personas más especiales que existen.
-      Verte crecer es como ver florecer un girasol en tiempo real: despacio, con gracia,
-      sin apuro, pero inevitable.<br><br>
-      Que este año te traiga todo lo que buscas: momentos de paz junto a un gato
-      ronroneando, luz natural perfecta para fotografiar, y canciones que solo tú
-      sabes cantar. <strong>Feliz cumpleaños, Jenny. El mundo es mejor contigo en él.</strong>`,
-    reasons: [
-      { icon: '🌻', text: '25 años de dar luz a todo lo que tocas — eso no es poca cosa.' },
-      { icon: '🐱', text: 'Tu calma y tu calidez son exactamente lo que el mundo necesita más.' },
-      { icon: '📷', text: 'Tienes un ojo para la belleza que muy poca gente desarrolla en toda su vida.' },
-      { icon: '🎤', text: 'Cantas con una honestidad que llega directo al corazón. Eso no se finge.' },
-      { icon: '💙', text: 'Eres tranquila como el azul profundo y luminosa como el azul del mediodía.' },
-      { icon: '🖤', text: 'Tu estilo de negro es tuyo — no lo copias de nadie, simplemente lo eres.' }
-    ],
-    finale: 'Cada año que cumples, el universo gana algo mejor.'
-  }
-
-};
-
-/* ─────────────────────────────────────────────────────────
-   GENERADOR AUTOMÁTICO para años no definidos
-───────────────────────────────────────────────────────── */
-function getContent(year) {
-  if (CONTENT[year]) return CONTENT[year];
-  const age = year - BIRTH_YEAR;
-  return {
-    letter: `Jenny,<br><br>
-      <em>${age} años</em> de existencia pura y extraordinaria.
-      Cada cumpleaños tuyo es una prueba de que las personas que dan luz
-      al mundo merecen ser celebradas en grande.<br><br>
-      Que este <strong>${year}</strong> te traiga girasoles en cada esquina,
-      gatos ronroneando a tu lado, y todo el azul que el cielo pueda darte.
-      Con todo mi cariño, siempre.`,
-    reasons: [
-      { icon: '🌻', text: `${age} años siendo el girasol más bonito que conozco.` },
-      { icon: '🐱', text: 'Los gatos siguen eligiéndote — saben lo que hacen.' },
-      { icon: '📷', text: 'Tu manera de ver el mundo a través del lente sigue siendo única.' },
-      { icon: '🎤', text: 'Tu voz sigue siendo de las cosas más bonitas que existen.' },
-      { icon: '💙', text: 'Profunda como el azul, luminosa como siempre.' },
-      { icon: '🖤', text: 'Elegante, real y completamente tú.' }
-    ],
-    finale: `Año ${year}: el mejor, porque lo vives tú.`
-  };
-}
-
-/* ─────────────────────────────────────────────────────────
-   INICIALIZACIÓN
-───────────────────────────────────────────────────────── */
-const NOW  = new Date();
-const YEAR = NOW.getFullYear();
-const AGE  = YEAR - BIRTH_YEAR;
-const DATA = getContent(YEAR);
-let musicOn = false;
-
-// Rellenar DOM
-document.getElementById('heroYear').textContent    = YEAR;
-document.getElementById('heroAge').textContent     = `${AGE} años de pura magia 🌻`;
-document.getElementById('letterYear').textContent  = YEAR;
-document.getElementById('finaleYear').textContent  = YEAR;
-document.getElementById('footerYear').textContent  = YEAR;
-document.getElementById('letterText').innerHTML    = DATA.letter;
-document.getElementById('finaleQuote').textContent = DATA.finale;
-
-// Tarjetas de razones
-const grid = document.getElementById('reasonsGrid');
-DATA.reasons.forEach((r, i) => {
-  const card = document.createElement('div');
-  card.className = 'reason-card';
-  card.setAttribute('data-icon', r.icon);
-  card.innerHTML = `<div class="reason-num">0${i + 1}</div>
-                    <p class="reason-text">${r.text}</p>`;
-  grid.appendChild(card);
+// Initialize particles.js
+particlesJS("particles-js", {
+    "particles": {
+        "number": {
+            "value": 40,
+            "density": {
+                "enable": true,
+                "value_area": 800
+            }
+        },
+        "color": {
+            "value": "#f06292"
+        },
+        "shape": {
+            "type": "circle",
+            "stroke": {
+                "width": 0,
+                "color": "#000000"
+            }
+        },
+        "opacity": {
+            "value": 0.6,
+            "random": true,
+            "anim": {
+                "enable": true,
+                "speed": 1,
+                "opacity_min": 0.1,
+                "sync": false
+            }
+        },
+        "size": {
+            "value": 6,
+            "random": true,
+            "anim": {
+                "enable": true,
+                "speed": 2,
+                "size_min": 0.1,
+                "sync": false
+            }
+        },
+        "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#f8bbd0",
+            "opacity": 0.4,
+            "width": 1.5
+        },
+        "move": {
+            "enable": true,
+            "speed": 1.5,
+            "direction": "none",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+                "enable": true,
+                "rotateX": 600,
+                "rotateY": 1200
+            }
+        }
+    },
+    "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+            "onhover": {
+                "enable": true,
+                "mode": "grab"
+            },
+            "onclick": {
+                "enable": true,
+                "mode": "push"
+            },
+            "resize": true
+        },
+        "modes": {
+            "grab": {
+                "distance": 160,
+                "line_linked": {
+                    "opacity": 1
+                }
+            },
+            "push": {
+                "particles_nb": 6
+            }
+        }
+    },
+    "retina_detect": true
 });
 
-/* ─────────────────────────────────────────────────────────
-   CANVAS — partículas de fondo
-───────────────────────────────────────────────────────── */
-const canvas = document.getElementById('bgCanvas');
-const ctx    = canvas.getContext('2d');
-let W, H;
-
-function resizeCanvas() {
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const particles = Array.from({ length: 130 }, () => ({
-  x:     Math.random() * 1920,
-  y:     Math.random() * 1080,
-  r:     Math.random() * 1.5 + 0.3,
-  a:     Math.random(),
-  speed: Math.random() * 0.005 + 0.001,
-  phase: Math.random() * Math.PI * 2,
-  color: Math.random() > 0.5 ? [59, 158, 255] : [244, 196, 48]
-}));
-
-function drawBg(t) {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach(p => {
-    const alpha = p.a * (0.4 + 0.6 * Math.sin(t * p.speed + p.phase));
-    ctx.beginPath();
-    ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.color[0]},${p.color[1]},${p.color[2]},${alpha})`;
-    ctx.fill();
-  });
-  requestAnimationFrame(drawBg);
-}
-requestAnimationFrame(drawBg);
-
-/* ─────────────────────────────────────────────────────────
-   COUNTDOWN
-   CORRECCIÓN: si es el cumpleaños, muestra el mensaje PERO
-   no bloquea la página — los fuegos son solo decoración.
-───────────────────────────────────────────────────────── */
-function isBday() {
-  const n = new Date();
-  return n.getMonth() + 1 === BDAY_MONTH && n.getDate() === BDAY_DAY;
-}
-
-function nextBday() {
-  const n = new Date();
-  let t = new Date(n.getFullYear(), BDAY_MONTH - 1, BDAY_DAY, 0, 0, 0);
-  if (n >= t) t.setFullYear(t.getFullYear() + 1);
-  return t;
-}
-
-function pad(n) { return String(n).padStart(2, '0'); }
-
-function setupCountdown() {
-  if (isBday()) {
-    // Es el cumpleaños: ocultar números, mostrar mensaje, fuegos en fondo
-    document.getElementById('cdGrid').style.display   = 'none';
-    document.getElementById('bdayMode').style.display = 'block';
-    // Los fuegos van como fondo decorativo ENCIMA del canvas, no bloquean nada
-    launchFireworks();
-    return;
-  }
-
-  // No es el cumpleaños: mostrar countdown normal
-  function tick() {
-    const diff = nextBday() - new Date();
-    if (diff <= 0) { setupCountdown(); return; }
-    document.getElementById('cdD').textContent = pad(Math.floor(diff / 86400000));
-    document.getElementById('cdH').textContent = pad(Math.floor((diff % 86400000) / 3600000));
-    document.getElementById('cdM').textContent = pad(Math.floor((diff % 3600000) / 60000));
-    document.getElementById('cdS').textContent = pad(Math.floor((diff % 60000) / 1000));
-  }
-  tick();
-  setInterval(tick, 1000);
-}
-
-setupCountdown();
-
-/* ─────────────────────────────────────────────────────────
-   FUEGOS ARTIFICIALES
-   CORRECCIÓN: canvas separado con pointer-events:none
-   para que NO bloquee el scroll ni los clics.
-───────────────────────────────────────────────────────── */
-function launchFireworks() {
-  const fwCanvas = document.createElement('canvas');
-  fwCanvas.style.cssText = `
-    position: fixed; inset: 0;
-    pointer-events: none;
-    z-index: 5;
-  `;
-  fwCanvas.width  = window.innerWidth;
-  fwCanvas.height = window.innerHeight;
-  document.body.appendChild(fwCanvas);
-
-  window.addEventListener('resize', () => {
-    fwCanvas.width  = window.innerWidth;
-    fwCanvas.height = window.innerHeight;
-  });
-
-  const fc = fwCanvas.getContext('2d');
-  let ps = [];
-  const colors = ['#3b9eff', '#f4c430', '#ffffff', '#1a6fc4', '#e8a500', '#ff80ab'];
-
-  function shoot() {
-    const x = Math.random() * fwCanvas.width;
-    const y = Math.random() * fwCanvas.height * 0.6;
-    for (let i = 0; i < 50; i++) {
-      const angle = (i / 50) * Math.PI * 2;
-      const speed = 2 + Math.random() * 4;
-      ps.push({
-        x, y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        life: 1,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      });
-    }
-  }
-
-  function animFW() {
-    fc.fillStyle = 'rgba(8,12,15,0.15)';
-    fc.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
-    ps.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      p.vy += 0.04; p.life -= 0.014;
-      fc.globalAlpha = Math.max(0, p.life);
-      fc.fillStyle   = p.color;
-      fc.beginPath();
-      fc.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-      fc.fill();
+// Initialize GSAP animations
+document.addEventListener('DOMContentLoaded', function() {
+    showStep(currentStep);
+    createPetals();
+    
+    // Animate the heart message
+    const heartMessage = document.getElementById('heartMessage');
+    document.getElementById('interactiveHeart').addEventListener('click', function() {
+        setTimeout(() => {
+            heartMessage.classList.add('show');
+        }, 500);
     });
-    fc.globalAlpha = 1;
-    ps = ps.filter(p => p.life > 0);
-    requestAnimationFrame(animFW);
-  }
-
-  // Primeras explosiones escalonadas
-  for (let i = 0; i < 5; i++) setTimeout(shoot, i * 600);
-  // Luego cada 1.6s de forma continua pero suave
-  setInterval(() => { if (Math.random() > 0.4) shoot(); }, 1600);
-  animFW();
-}
-
-/* ─────────────────────────────────────────────────────────
-   ELEMENTOS FLOTANTES (girasoles y gatos)
-───────────────────────────────────────────────────────── */
-const FLOATERS = ['🌻', '🐱', '💙', '🌻', '🐾', '🌻', '🐱', '💛'];
-
-function spawnFloat() {
-  const el = document.createElement('div');
-  el.className   = 'float-el';
-  el.textContent = FLOATERS[Math.floor(Math.random() * FLOATERS.length)];
-  el.style.left  = Math.random() * 100 + 'vw';
-  el.style.top   = 'calc(100vh + 10px)';
-  el.style.fontSize = (0.9 + Math.random() * 1) + 'rem';
-  const dur = 10 + Math.random() * 12;
-  el.style.animationDuration = dur + 's';
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), dur * 1000);
-}
-setInterval(spawnFloat, 1200);
-
-/* ─────────────────────────────────────────────────────────
-   CURSOR PERSONALIZADO
-───────────────────────────────────────────────────────── */
-let mx = 0, my = 0, tx = 0, ty = 0;
-const cur  = document.getElementById('cur');
-const ring = document.getElementById('curRing');
-
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-(function moveCursor() {
-  tx += (mx - tx) * 0.14;
-  ty += (my - ty) * 0.14;
-  cur.style.transform  = `translate(${mx - 5}px, ${my - 5}px)`;
-  ring.style.transform = `translate(${tx - 18}px, ${ty - 18}px)`;
-  requestAnimationFrame(moveCursor);
-})();
-
-/* ─────────────────────────────────────────────────────────
-   MÚSICA
-───────────────────────────────────────────────────────── */
-const audio    = document.getElementById('bgAudio');
-const musicBtn = document.getElementById('musicBtn');
-
-musicBtn.addEventListener('click', () => {
-  if (musicOn) {
-    audio.pause();
-    musicBtn.textContent = '♪';
-    musicBtn.classList.remove('on');
-  } else {
-    audio.play().catch(() => {});
-    musicBtn.textContent = '♫';
-    musicBtn.classList.add('on');
-  }
-  musicOn = !musicOn;
+    
+    // Set countdown (example: next 24 hours)
+    setCountdown();
 });
 
-/* ─────────────────────────────────────────────────────────
-   SCROLL REVEAL
-───────────────────────────────────────────────────────── */
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: 0.1 });
+// Function to show current step
+function showStep(step) {
+    // Hide all steps
+    document.querySelectorAll('.step').forEach(el => {
+        el.classList.remove('active');
+    });
+    
+    // Show current step
+    const currentStepEl = document.getElementById(`step${step}`);
+    currentStepEl.classList.add('active');
+    
+    // Update progress bar
+    const progressPercentage = ((step - 1) / (totalSteps - 1)) * 100;
+    gsap.to("#progressBar", {
+        width: `${progressPercentage}%`,
+        duration: 1,
+        ease: "power2.out"
+    });
+    
+    // Special animations for each step
+    switch(step) {
+        case 1:
+            // Animate envelope
+            gsap.from("#envelope", {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                ease: "back.out(1.7)"
+            });
+            break;
+        case 2:
+            // Animate input
+            gsap.from(".name-input", {
+                scale: 0.5,
+                opacity: 0,
+                duration: 0.8,
+                ease: "elastic.out(1, 0.5)"
+            });
+            break;
+        case 3:
+            // Animate heart
+            gsap.from("#interactiveHeart", {
+                scale: 0.5,
+                rotation: 180,
+                duration: 1,
+                ease: "elastic.out(1, 0.5)"
+            });
+            document.getElementById('heartName').textContent = userName;
+            break;
+        case 4:
+            // Type out message
+            typeMessage();
+            // Animate photo frame
+            gsap.from(".photo-frame", {
+                y: 50,
+                rotation: -10,
+                opacity: 0,
+                duration: 1,
+                ease: "back.out(1.7)"
+            });
+            break;
+        case 5:
+            // Animate polaroids
+            gsap.from(".polaroid", {
+                y: 100,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 1,
+                ease: "back.out(1.7)"
+            });
+            break;
+        case 6:
+            // Create fireworks
+            createFireworks();
+            // Animate final heart
+            gsap.from(".heart", {
+                scale: 0,
+                duration: 1.5,
+                ease: "elastic.out(1, 0.5)"
+            });
+            break;
+    }
+}
 
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+// Function to go to next step
+function nextStep() {
+    if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+        
+        // Open envelope if on step 1
+        if (currentStep === 2) {
+            document.getElementById('envelope').classList.add('open');
+        }
+    }
+}
 
-/* ─────────────────────────────────────────────────────────
-   LOADER
-───────────────────────────────────────────────────────── */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('loader').classList.add('out');
-    document.getElementById('app').classList.add('show');
-  }, 2200);
-});
+// Function to save name
+function saveName() {
+    const nameInput = document.getElementById('nameInput').value.trim();
+    if (nameInput) {
+        userName = nameInput;
+        document.getElementById('displayName').textContent = userName;
+        document.getElementById('finalName').textContent = userName;
+        document.getElementById('heartName').textContent = userName;
+        nextStep();
+        
+        // Animate success
+        gsap.to(".name-input", {
+            backgroundColor: "#e8f5e9",
+            borderColor: "#81c784",
+            duration: 0.5,
+            yoyo: true,
+            repeat: 1
+        });
+    } else {
+        // Animate error
+        gsap.to(".name-input", {
+            backgroundColor: "#ffebee",
+            borderColor: "#e53935",
+            duration: 0.5,
+            yoyo: true,
+            repeat: 1
+        });
+        alert("Por favor ingrese su hermoso nombre para continuar");
+    }
+}
+
+// Function to create floating hearts
+function createHearts() {
+    const container = document.getElementById('floatingHearts');
+    const colors = ['#ff4081', '#f06292', '#f8bbd0', '#d81b60', '#ff80ab'];
+    
+    for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        heart.innerHTML = '❤';
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.animationDuration = `${3 + Math.random() * 3}s`;
+        heart.style.fontSize = `${20 + Math.random() * 25}px`;
+        heart.style.top = `${60 + Math.random() * 30}%`;
+        
+        container.appendChild(heart);
+        
+        // Remove heart after animation completes
+        setTimeout(() => {
+            heart.remove();
+        }, 4000);
+    }
+    
+    // Animate heart click
+    gsap.to("#interactiveHeart", {
+        scale: 1.3,
+        duration: 0.3,
+        yoyo: true,
+        repeat: 1
+    });
+}
+
+// Function to create falling petals
+function createPetals() {
+    const container = document.getElementById('petalsContainer');
+    const petalColors = ['#ffcdd2', '#f8bbd0', '#fce4ec', '#f48fb1'];
+    
+    for (let i = 0; i < 15; i++) {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        
+        // Random petal shape
+        const petalType = Math.floor(Math.random() * 3);
+        let petalShape;
+        switch(petalType) {
+            case 0:
+                petalShape = "M50,0 C60,15 60,30 50,45 C40,30 40,15 50,0";
+                break;
+            case 1:
+                petalShape = "M50,0 C70,20 70,40 50,50 C30,40 30,20 50,0";
+                break;
+            case 2:
+                petalShape = "M50,0 C55,10 55,25 50,35 C45,25 45,10 50,0";
+                break;
+        }
+        
+        petal.style.width = `${10 + Math.random() * 20}px`;
+        petal.style.height = `${10 + Math.random() * 20}px`;
+        petal.style.left = `${Math.random() * 100}%`;
+        petal.style.top = `-20px`;
+        petal.style.fill = petalColors[Math.floor(Math.random() * petalColors.length)];
+        petal.style.opacity = 0.7 + Math.random() * 0.3;
+        
+        // Create SVG for petal
+        petal.innerHTML = `
+            <svg viewBox="0 0 100 50" width="100%" height="100%">
+                <path d="${petalShape}" fill="${petalColors[Math.floor(Math.random() * petalColors.length)]}" />
+            </svg>
+        `;
+        
+        container.appendChild(petal);
+        
+        // Animate petal falling
+        const duration = 10 + Math.random() * 20;
+        const delay = Math.random() * 15;
+        const sway = 50 + Math.random() * 100;
+        
+        gsap.to(petal, {
+            y: window.innerHeight + 50,
+            x: `+=${sway}`,
+            rotation: 360,
+            duration: duration,
+            delay: delay,
+            ease: "none",
+            onComplete: () => {
+                // Reset petal to top
+                petal.style.top = `-20px`;
+                petal.style.left = `${Math.random() * 100}%`;
+                // Repeat animation
+                gsap.to(petal, {
+                    y: window.innerHeight + 50,
+                    x: `+=${sway}`,
+                    rotation: 360,
+                    duration: duration,
+                    ease: "none",
+                    onComplete: () => {
+                        petal.remove();
+                    }
+                });
+            }
+        });
+    }
+}
+
+// Function to type out message
+function typeMessage() {
+    const messages = [
+        `Dear ${userName},`,
+        "En tu día especial, quiero que sepas...",
+        "Eres la persona más increíble que he conocido..",
+        "No hay constelación más bonita que tu sonrisa..",
+        "Tus ojos color miel son el encanto más dulce que existe..",
+        "Estoy tan agradecido de haberte conocido.",
+        "Que este año te traiga toda la alegría que mereces.",
+        "Aunque lo que tú mereces no cabe en este mundo.",
+        "Feliz cumpleaños Jenny! ❤"
+    ];
+    
+    const typingText = document.getElementById('typingText');
+    let messageIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    
+    function type() {
+        const currentMessage = messages[messageIndex];
+        
+        if (isDeleting) {
+            typingText.innerHTML = currentMessage.substring(0, charIndex - 1);
+            charIndex--;
+            typingSpeed = 50;
+        } else {
+            typingText.innerHTML = currentMessage.substring(0, charIndex + 1);
+            charIndex++;
+            typingSpeed = 100;
+        }
+        
+        if (!isDeleting && charIndex === currentMessage.length) {
+            isDeleting = true;
+            typingSpeed = 1500; // Pause at end of message
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            messageIndex = (messageIndex + 1) % messages.length;
+            typingSpeed = 500; // Pause before next message
+        }
+        
+        setTimeout(type, typingSpeed);
+    }
+    
+    // Start typing after a short delay
+    setTimeout(() => {
+        document.getElementById('typedMessage').classList.add('show');
+        type();
+    }, 500);
+}
+
+// Function to create fireworks
+function createFireworks() {
+    // Create initial fireworks
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            createFirework();
+        }, i * 800);
+    }
+    
+    // Continue with occasional fireworks
+    setInterval(() => {
+        if (Math.random() > 0.7) {
+            createFirework();
+        }
+    }, 2000);
+}
+
+function createFirework() {
+    const colors = ['#ff4081', '#f06292', '#f8bbd0', '#d81b60', '#ff80ab', '#ffcdd2'];
+    
+    // Create firework center
+    const firework = document.createElement('div');
+    firework.classList.add('firework');
+    firework.style.color = colors[Math.floor(Math.random() * colors.length)];
+    firework.style.setProperty('--x', `${Math.random() * window.innerWidth}px`);
+    firework.style.setProperty('--y', `${Math.random() * window.innerHeight * 0.8}px`);
+    firework.style.setProperty('--x-end', `${(Math.random() - 0.5) * 20}px`);
+    firework.style.setProperty('--y-end', `${(Math.random() - 0.5) * 20}px`);
+    
+    document.body.appendChild(firework);
+    
+    // Create particles
+    setTimeout(() => {
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('firework-particle');
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.left = firework.style.getPropertyValue('--x');
+            particle.style.top = firework.style.getPropertyValue('--y');
+            particle.style.setProperty('--tx', `${Math.cos(i * 0.2) * 100}px`);
+            particle.style.setProperty('--ty', `${Math.sin(i * 0.2) * 100}px`);
+            
+            document.body.appendChild(particle);
+            
+            // Remove after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }
+        
+        firework.remove();
+    }, 1000);
+}
+
+// Function to set countdown
+function setCountdown() {
+    // Set target date (next 24 hours from now)
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 1);
+    
+    function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+        
+        if (diff <= 0) {
+            document.getElementById('countdown').innerHTML = "<span>Happy Birthday!</span>";
+            return;
+        }
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+
+
+// Function to share on social media
+function shareOnSocial(platform) {
+    let url = '';
+    const text = `Check out this beautiful birthday wish for ${userName}! ${window.location.href}`;
+    
+    switch(platform) {
+        case 'facebook':
+            url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+            break;
+        case 'twitter':
+            url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+            break;
+        case 'whatsapp':
+            url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            break;
+    }
+    
+    window.open(url, '_blank', 'width=600,height=400');
+    
+    // Animate share button
+    gsap.to(`.social-icon:nth-child(${['facebook', 'twitter', 'whatsapp'].indexOf(platform) + 1})`, {
+        scale: 1.3,
+        duration: 0.3,
+        yoyo: true,
+        repeat: 1
+    });
+}
+
+// Obtiene el elemento de audio
+const bgMusic = document.getElementById('bgMusic');
+
+// Variable para saber si la música ya se reprodujo
+let hasPlayed = false;
+
+// Función para reproducir la música
+function playMusic() {
+    // Si la música ya se reprodujo, no hagas nada
+    if (hasPlayed) return;
+
+    bgMusic.play().then(() => {
+        // La música se reprodujo exitosamente
+        console.log("Música iniciada por interacción del usuario.");
+        hasPlayed = true;
+    }).catch(error => {
+        // Hubo un error (el navegador lo bloqueó de nuevo, etc.)
+        console.error("Error al intentar reproducir la música:", error);
+    });
+}
+
+// Escucha el primer evento de clic o toque en el documento
+document.addEventListener('click', playMusic, { once: true });
+document.addEventListener('touchstart', playMusic, { once: true });
