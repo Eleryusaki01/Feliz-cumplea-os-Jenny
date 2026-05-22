@@ -475,58 +475,53 @@ const audio     = document.getElementById('bgAudio');
 const musicBtn  = document.getElementById('musicBtn');
 const musicIcon = musicBtn.querySelector('.music-icon');
 
-audio.volume = 0.75;
+audio.volume = 0.8;
+audio.preload = 'auto';
 
-// El botón late desde el inicio para que Jenny lo note
+// El botón late desde el inicio para llamar la atención
 musicBtn.classList.add('waiting');
 
-function playMusic() {
-  audio.play().then(() => {
-    musicOn = true;
-    musicIcon.textContent = '♫';
-    musicBtn.classList.remove('waiting');
-    musicBtn.classList.add('on');
-  }).catch(() => {});
+function setPlaying() {
+  musicOn = true;
+  musicIcon.textContent = '♫';
+  musicBtn.classList.remove('waiting');
+  musicBtn.classList.add('on');
 }
-
-function stopMusic() {
-  audio.pause();
+function setStopped() {
+  musicOn = false;
   musicIcon.textContent = '♪';
   musicBtn.classList.remove('on');
   musicBtn.classList.add('waiting');
-  musicOn = false;
 }
 
-// Intenta reproducir automáticamente al cargar
-// Los navegadores lo permiten si el usuario ya interactuó antes con el sitio
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    audio.play().then(() => {
-      musicOn = true;
-      musicIcon.textContent = '♫';
-      musicBtn.classList.remove('waiting');
-      musicBtn.classList.add('on');
-    }).catch(() => {
-      // Navegador bloqueó autoplay: el botón sigue latiendo esperando primer clic
-      document.addEventListener('click', function firstClick() {
-        playMusic();
-        document.removeEventListener('click', firstClick);
-      });
-      document.addEventListener('touchstart', function firstTouch() {
-        playMusic();
-        document.removeEventListener('touchstart', firstTouch);
-      });
-    });
-  }, 2200); // Espera a que el loader termine
-});
+// TRUCO REAL: capturar el primer gesto del usuario (mousedown/touchstart)
+// y reproducir DENTRO de ese mismo evento — los navegadores lo permiten
+function firstGesture(e) {
+  // No detener propagación para no interferir con clicks normales
+  audio.play().then(() => {
+    setPlaying();
+  }).catch(() => {});
+  document.removeEventListener('mousedown',  firstGesture);
+  document.removeEventListener('touchstart', firstGesture);
+}
+document.addEventListener('mousedown',  firstGesture);
+document.addEventListener('touchstart', firstGesture, { passive: true });
 
-// Botón: clic para pausar/reanudar
+// Intentar también autoplay puro (funciona si el usuario visitó antes)
+setTimeout(() => {
+  if (!musicOn) {
+    audio.play().then(setPlaying).catch(() => { /* esperando gesto */ });
+  }
+}, 500);
+
+// Botón: toggle pausa/play
 musicBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   if (musicOn) {
-    stopMusic();
+    audio.pause();
+    setStopped();
   } else {
-    playMusic();
+    audio.play().then(setPlaying).catch(() => {});
   }
 });
 
