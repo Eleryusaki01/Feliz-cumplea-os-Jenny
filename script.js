@@ -4,16 +4,14 @@
 ═══════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────────────────────────────────────
-   CONFIGURACIÓN — ajusta estos valores
+   CONFIGURACIÓN
 ───────────────────────────────────────────────────────── */
-const BDAY_MONTH = 5;    // Mayo = 5
-const BDAY_DAY   = 21;   // Día 21
-const BIRTH_YEAR = 2002; // Año de nacimiento de Jenny
+const BDAY_MONTH = 5;
+const BDAY_DAY   = 21;
+const BIRTH_YEAR = 2002;
 
 /* ─────────────────────────────────────────────────────────
    CONTENIDO POR AÑO
-   Agrega nuevos bloques cada cumpleaños.
-   Si el año no está definido, se genera automáticamente.
 ───────────────────────────────────────────────────────── */
 const CONTENT = {
 
@@ -73,8 +71,6 @@ const CONTENT = {
     finale: 'Cada año que cumples, el universo gana algo mejor.'
   }
 
-  // ← Agrega 2028, 2029... con el mismo formato aquí
-
 };
 
 /* ─────────────────────────────────────────────────────────
@@ -113,12 +109,12 @@ const DATA = getContent(YEAR);
 let musicOn = false;
 
 // Rellenar DOM
-document.getElementById('heroYear').textContent   = YEAR;
-document.getElementById('heroAge').textContent    = `${AGE} años de pura magia 🌻`;
-document.getElementById('letterYear').textContent = YEAR;
-document.getElementById('finaleYear').textContent = YEAR;
-document.getElementById('footerYear').textContent = YEAR;
-document.getElementById('letterText').innerHTML   = DATA.letter;
+document.getElementById('heroYear').textContent    = YEAR;
+document.getElementById('heroAge').textContent     = `${AGE} años de pura magia 🌻`;
+document.getElementById('letterYear').textContent  = YEAR;
+document.getElementById('finaleYear').textContent  = YEAR;
+document.getElementById('footerYear').textContent  = YEAR;
+document.getElementById('letterText').innerHTML    = DATA.letter;
 document.getElementById('finaleQuote').textContent = DATA.finale;
 
 // Tarjetas de razones
@@ -171,52 +167,78 @@ requestAnimationFrame(drawBg);
 
 /* ─────────────────────────────────────────────────────────
    COUNTDOWN
+   CORRECCIÓN: si es el cumpleaños, muestra el mensaje PERO
+   no bloquea la página — los fuegos son solo decoración.
 ───────────────────────────────────────────────────────── */
+function isBday() {
+  const n = new Date();
+  return n.getMonth() + 1 === BDAY_MONTH && n.getDate() === BDAY_DAY;
+}
+
 function nextBday() {
   const n = new Date();
   let t = new Date(n.getFullYear(), BDAY_MONTH - 1, BDAY_DAY, 0, 0, 0);
   if (n >= t) t.setFullYear(t.getFullYear() + 1);
   return t;
 }
-function isBday() {
-  const n = new Date();
-  return n.getMonth() + 1 === BDAY_MONTH && n.getDate() === BDAY_DAY;
-}
+
 function pad(n) { return String(n).padStart(2, '0'); }
 
-function tickCountdown() {
+function setupCountdown() {
   if (isBday()) {
-    document.getElementById('cdGrid').style.display  = 'none';
+    // Es el cumpleaños: ocultar números, mostrar mensaje, fuegos en fondo
+    document.getElementById('cdGrid').style.display   = 'none';
     document.getElementById('bdayMode').style.display = 'block';
+    // Los fuegos van como fondo decorativo ENCIMA del canvas, no bloquean nada
     launchFireworks();
     return;
   }
-  const diff = nextBday() - new Date();
-  document.getElementById('cdD').textContent = pad(Math.floor(diff / 86400000));
-  document.getElementById('cdH').textContent = pad(Math.floor((diff % 86400000) / 3600000));
-  document.getElementById('cdM').textContent = pad(Math.floor((diff % 3600000) / 60000));
-  document.getElementById('cdS').textContent = pad(Math.floor((diff % 60000) / 1000));
+
+  // No es el cumpleaños: mostrar countdown normal
+  function tick() {
+    const diff = nextBday() - new Date();
+    if (diff <= 0) { setupCountdown(); return; }
+    document.getElementById('cdD').textContent = pad(Math.floor(diff / 86400000));
+    document.getElementById('cdH').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    document.getElementById('cdM').textContent = pad(Math.floor((diff % 3600000) / 60000));
+    document.getElementById('cdS').textContent = pad(Math.floor((diff % 60000) / 1000));
+  }
+  tick();
+  setInterval(tick, 1000);
 }
-tickCountdown();
-setInterval(tickCountdown, 1000);
+
+setupCountdown();
 
 /* ─────────────────────────────────────────────────────────
-   FUEGOS ARTIFICIALES (solo el día del cumpleaños)
+   FUEGOS ARTIFICIALES
+   CORRECCIÓN: canvas separado con pointer-events:none
+   para que NO bloquee el scroll ni los clics.
 ───────────────────────────────────────────────────────── */
 function launchFireworks() {
   const fwCanvas = document.createElement('canvas');
-  fwCanvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:60;';
-  fwCanvas.width = W; fwCanvas.height = H;
+  fwCanvas.style.cssText = `
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  `;
+  fwCanvas.width  = window.innerWidth;
+  fwCanvas.height = window.innerHeight;
   document.body.appendChild(fwCanvas);
+
+  window.addEventListener('resize', () => {
+    fwCanvas.width  = window.innerWidth;
+    fwCanvas.height = window.innerHeight;
+  });
+
   const fc = fwCanvas.getContext('2d');
   let ps = [];
-  const colors = ['#3b9eff', '#f4c430', '#ffffff', '#1a6fc4', '#e8a500'];
+  const colors = ['#3b9eff', '#f4c430', '#ffffff', '#1a6fc4', '#e8a500', '#ff80ab'];
 
   function shoot() {
-    const x = Math.random() * W;
-    const y = Math.random() * H * 0.6;
-    for (let i = 0; i < 55; i++) {
-      const angle = (i / 55) * Math.PI * 2;
+    const x = Math.random() * fwCanvas.width;
+    const y = Math.random() * fwCanvas.height * 0.6;
+    for (let i = 0; i < 50; i++) {
+      const angle = (i / 50) * Math.PI * 2;
       const speed = 2 + Math.random() * 4;
       ps.push({
         x, y,
@@ -229,11 +251,11 @@ function launchFireworks() {
   }
 
   function animFW() {
-    fc.fillStyle = 'rgba(8,12,15,.18)';
-    fc.fillRect(0, 0, W, H);
+    fc.fillStyle = 'rgba(8,12,15,0.15)';
+    fc.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
     ps.forEach(p => {
       p.x += p.vx; p.y += p.vy;
-      p.vy += 0.04; p.life -= 0.015;
+      p.vy += 0.04; p.life -= 0.014;
       fc.globalAlpha = Math.max(0, p.life);
       fc.fillStyle   = p.color;
       fc.beginPath();
@@ -245,12 +267,12 @@ function launchFireworks() {
     requestAnimationFrame(animFW);
   }
 
-  for (let i = 0; i < 6; i++) setTimeout(shoot, i * 500);
-  setInterval(() => { if (Math.random() > 0.5) shoot(); }, 1400);
+  // Primeras explosiones escalonadas
+  for (let i = 0; i < 5; i++) setTimeout(shoot, i * 600);
+  // Luego cada 1.6s de forma continua pero suave
+  setInterval(() => { if (Math.random() > 0.4) shoot(); }, 1600);
   animFW();
 }
-
-if (isBday()) launchFireworks();
 
 /* ─────────────────────────────────────────────────────────
    ELEMENTOS FLOTANTES (girasoles y gatos)
@@ -259,10 +281,10 @@ const FLOATERS = ['🌻', '🐱', '💙', '🌻', '🐾', '🌻', '🐱', '💛'
 
 function spawnFloat() {
   const el = document.createElement('div');
-  el.className  = 'float-el';
+  el.className   = 'float-el';
   el.textContent = FLOATERS[Math.floor(Math.random() * FLOATERS.length)];
-  el.style.left = Math.random() * 100 + 'vw';
-  el.style.top  = 'calc(100vh + 10px)';
+  el.style.left  = Math.random() * 100 + 'vw';
+  el.style.top   = 'calc(100vh + 10px)';
   el.style.fontSize = (0.9 + Math.random() * 1) + 'rem';
   const dur = 10 + Math.random() * 12;
   el.style.animationDuration = dur + 's';
@@ -310,11 +332,11 @@ musicBtn.addEventListener('click', () => {
 /* ─────────────────────────────────────────────────────────
    SCROLL REVEAL
 ───────────────────────────────────────────────────────── */
-const observer = new IntersectionObserver(entries => {
+const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 /* ─────────────────────────────────────────────────────────
    LOADER
