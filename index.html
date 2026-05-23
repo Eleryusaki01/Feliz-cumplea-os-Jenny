@@ -8,12 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
 </head>
 <body>
- 
+
   <div class="bg-gradient"></div>
   <div class="bg-bokeh" id="bokehLayer"></div>
   <canvas id="petalCanvas"></canvas>
   <div id="butterflies"></div>
- 
+
   <!-- LOADER -->
   <div id="loader">
     <div class="loader-inner">
@@ -22,7 +22,7 @@
       <p class="loader-text">Preparando algo especial para ti…</p>
     </div>
   </div>
- 
+
   <!-- MÚSICA — preload para que esté lista al primer gesto -->
   <audio id="bgAudio" loop preload="auto">
     <source src="Christopher.mp3" type="audio/mpeg"/>
@@ -32,9 +32,9 @@
   <button class="music-btn" id="musicBtn" title="Toca para escuchar música 🎵">
     <span class="music-icon">♪</span>
   </button>
- 
+
   <main id="app">
- 
+
     <!-- ══ HERO ══ -->
     <section class="hero">
       <div class="hero-flowers">
@@ -67,7 +67,7 @@
         </div>
       </div>
     </section>
- 
+
     <!-- ══ COUNTDOWN ══ -->
     <section class="countdown-section reveal">
       <div class="section-deco">🌺 · 🦋 · 🌸 · 🦋 · 🌺</div>
@@ -86,11 +86,11 @@
         <br/><span>El universo entero lo celebra contigo 🌸</span>
       </div>
     </section>
- 
+
     <div class="petal-divider reveal">
       <span>🌸</span><span>🌼</span><span>🌺</span><span>🌸</span><span>🌼</span>
     </div>
- 
+
     <!-- ══ CARTA ══ -->
     <section class="letter-section reveal">
       <div class="section-deco">🦋 · 🌹 · 🦋</div>
@@ -104,18 +104,18 @@
         <p class="letter-sign">Con todo mi amor,<br/><em>Borys</em> 🌹</p>
       </div>
     </section>
- 
+
     <div class="petal-divider reveal">
       <span>🌹</span><span>💌</span><span>🌹</span><span>💌</span><span>🌹</span>
     </div>
- 
+
     <!-- ══ HISTORIA ══ -->
     <section class="story-section reveal">
       <div class="section-deco">🌹 · 💌 · 🌹</div>
       <h2 class="section-title">Una historia para ti, <em>Hadasha</em></h2>
- 
+
       <div class="story-wrap">
- 
+
         <!-- Capítulo 1 -->
         <div class="story-chapter">
           <div class="chapter-text">
@@ -130,7 +130,7 @@
             <div class="chapter-img-caption">El momento en que todo cambió 🌻</div>
           </div>
         </div>
- 
+
         <!-- Capítulo 2 -->
         <div class="story-chapter story-chapter--reverse">
           <div class="chapter-text">
@@ -145,7 +145,7 @@
             <div class="chapter-img-caption">Ella, siempre con su propio mundo 🌸</div>
           </div>
         </div>
- 
+
         <!-- Capítulo 3 -->
         <div class="story-chapter">
           <div class="chapter-text">
@@ -160,7 +160,7 @@
             <div class="chapter-img-caption">Esa sonrisa que lo inspiró todo 🌊</div>
           </div>
         </div>
- 
+
         <!-- Capítulo 4 -->
         <div class="story-chapter story-chapter--reverse">
           <div class="chapter-text">
@@ -174,7 +174,7 @@
             <div class="chapter-img-caption">La artista que captura el mundo 📷</div>
           </div>
         </div>
- 
+
         <!-- Cierre de la historia -->
         <div class="story-ending">
           <div class="story-ending-flowers">🌹 🌸 🌻 🌸 🌹</div>
@@ -184,14 +184,14 @@
           </blockquote>
           <p class="story-ending-sign">— El chico que quiso regalarte su corazón 🌹</p>
         </div>
- 
+
       </div>
     </section>
- 
+
     <div class="petal-divider reveal">
       <span>🦋</span><span>🌻</span><span>🦋</span><span>🌻</span><span>🦋</span>
     </div>
- 
+
     <!-- ══ GALERÍA ══ -->
     <section class="gallery-section reveal">
       <div class="section-deco">🌺 · 🌸 · 🌺</div>
@@ -215,22 +215,22 @@
         </div>
       </div>
     </section>
- 
+
     <div class="petal-divider reveal">
       <span>🌻</span><span>🦋</span><span>🌻</span><span>🦋</span><span>🌻</span>
     </div>
- 
+
     <!-- ══ RAZONES ══ -->
     <section class="reasons-section reveal">
       <div class="section-deco">🌻 · 🦋 · 🐱 · 🦋 · 🌻</div>
       <h2 class="section-title">Razones para admirarte</h2>
       <div class="reasons-grid" id="reasonsGrid"></div>
     </section>
- 
+
     <div class="petal-divider reveal">
       <span>🌺</span><span>🦋</span><span>🌺</span><span>🦋</span><span>🌺</span>
     </div>
- 
+
     <!-- ══ FINALE ══ -->
     <section class="finale-section reveal">
       <div class="finale-flowers">🌸🌼🌺🌻🌹🌸🌼🌺🌻🌹</div>
@@ -238,15 +238,15 @@
       <p class="finale-sign">— Borys, con amor · <span id="finaleYear"></span></p>
       <div class="finale-flowers">🌹🌻🌺🌼🌸🌹🌻🌺🌼🌸</div>
     </section>
- 
+
     <footer>
       <div class="footer-flowers">🌸 🦋 🌺 🦋 🌸</div>
       <p>Hecho con amor infinito para Jenny · <span id="footerYear"></span></p>
       <p class="footer-sub">Y así será cada año que Dios nos dé 🌹</p>
     </footer>
- 
+
   </main>
- 
+
   <script src="script.js"></script>
 </body>
 </html>
